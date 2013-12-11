@@ -1,11 +1,8 @@
 package com.introspy.core;
 
-import java.lang.reflect.Method;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class SQLiteIntrospyHelper extends SQLiteOpenHelper {
 

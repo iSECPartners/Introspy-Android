@@ -2,7 +2,6 @@ package com.introspy.config;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 @SuppressWarnings("rawtypes")
 public class AsyncOp extends AsyncTask {

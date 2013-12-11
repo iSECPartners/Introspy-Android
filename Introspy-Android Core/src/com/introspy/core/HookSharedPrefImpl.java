@@ -5,12 +5,11 @@ import java.util.Map;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.saurik.substrate.MS;
-
 
 class Func_CHECK_SHARED_PREF extends FuncParent { 
 	protected static boolean _onlyRetrievedPrefOnce = true;
 	protected static boolean _prefRetrieved = true; // true means it's not dumped
+	@SuppressWarnings("deprecation")
 	public void execute(Object... args) {
 		
 		// this is noisy so only display data when there is a potential issue
@@ -18,11 +17,12 @@ class Func_CHECK_SHARED_PREF extends FuncParent {
 				(_onlyRetrievedPrefOnce && !_prefRetrieved)) {
 			String prefName = (String) args[0];
 			_l.logParameter("Preference Name", args[0]);
-			_l.logLine("### PREF:"+ApplicationConfig.getPackageName() + ":getSharedPref:"+prefName);
+			_l.logLine("### PREF:"+ApplicationConfig.getPackageName() + 
+					":getSharedPref:"+prefName);
 			// display the pref retrieved
 			try {
 				SharedPreferences prefs = (SharedPreferences) 
-						_old.invoke(_resources, args);
+						_hookInvoke(args);
 				if (prefs != null && prefs.getAll().size() > 0)
 					_l.logFlush_I("-> " + prefs.getAll());
 			} catch (Throwable e) {
@@ -51,23 +51,35 @@ class Func_CHECK_SHARED_PREF extends FuncParent {
 
 class Func_GET_SHARED_PREF extends FuncParent { 
 	public void execute(Object... args) {		
-		try {
 			String prefName = (String) args[0]; // name of pref to retrieve
+			if (prefName == null) {
+				return;
+			}
+			// args[1] is the default value 
+			
 			_l.logParameter("Preference Name", args[0]);
-			String out = "### PREF:"+ApplicationConfig.getPackageName() + 
-							":getSharedPref:"+prefName+" - ";
-			Object o = _old.invoke(_resources, args);
+			String out = "### PREF:"+_packageName + 
+							":getSharedPref:"+ _methodName +
+							"; name: [" + args[0] + "]" +
+							", default: [" + args[1] + "]";
+			
+			Object o = null;
+			try {
+				o = _hookInvoke(args);
+			} catch (Throwable e) {
+				// this may throw if incorrect type specified in the code
+				// Log.w("IntrospyLog", "error in Func_GET_SHARED_PREF: "+e);
+			}
+			
 			if (o != null) {
-				out += "["+o+"]";
+				out += "; retrieves: ["+o+"]";
 				_l.logReturnValue("Value", o);
 				_l.logFlush_I(out);
 			}
 			else {
-				_l.logFlush_W("Preference not found (Hidden pref?)");
+				_l.logLine(out);
+				_l.logFlush_I("-> Preference not found or incorrect type specified");
 			}
-		} catch (Throwable e) {
-			Log.w("IntrospyLog", "error in Func_GET_SHARED_PREF: "+e);
-		}
 	}
 }
 
@@ -89,7 +101,7 @@ class Func_CONTAINS_SHARED_PREF extends FuncParent {
 		String prefName = (String) args[0]; // name of pref to retrieve
 
 		try {
-			boolean o = (Boolean) _old.invoke(_resources, args);
+			boolean o = (Boolean) _hookInvoke(args);
 			_l.logParameter("Preference Name", args[0]);
 			if (o == false) {
 				out = "### PREF:"+ApplicationConfig.getPackageName()+
@@ -99,7 +111,7 @@ class Func_CONTAINS_SHARED_PREF extends FuncParent {
 				_l.logFlush_W("Preference not found (Hidden pref?)");
 			}
 		} catch (Throwable e) {
-			Log.i("IntrospyLog", "error in Func_GET_SHARED_PREF: "+e);
+			Log.i("IntrospyLog", "error in Func_CONTAINS_SHARED_PREF: "+e);
 		}
 	}
 }
@@ -107,9 +119,10 @@ class Func_CONTAINS_SHARED_PREF extends FuncParent {
 class Func_GET_ALL_SHARED_PREF extends FuncParent { 
 	public void execute(Object... args) {
 			
-		// display the pref retrieved
+		// display all the prefs retrieved
 			try {
-				Map<String,?> keys = (Map<String, ?>) _old.invoke(_resources, args);
+				@SuppressWarnings("unchecked")
+				Map<String,?> keys = (Map<String, ?>) _hookInvoke(args);
 				if (keys != null && keys.size() > 0) {
 					_l.logLine("### PREF:"+ApplicationConfig.getPackageName()+":getAll:");
 					for(Map.Entry<String,?> entry : keys.entrySet()){
@@ -119,8 +132,9 @@ class Func_GET_ALL_SHARED_PREF extends FuncParent {
 				}
 				_l.logFlush_I();
 			} catch (Throwable e) {
-				Log.i("IntrospyLog", "-> not able to retrieve all preferences (getAll in " + 
-						ApplicationConfig.getPackageName()+")");
+				Log.i(_TAG_ERROR, "-> not able to retrieve all " +
+						"preferences (get All in " + 
+						ApplicationConfig.getPackageName()+"). Error: " + e);
 			}
 	}
 }

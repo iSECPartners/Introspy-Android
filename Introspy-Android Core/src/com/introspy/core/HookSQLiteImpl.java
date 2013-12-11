@@ -1,10 +1,5 @@
 package com.introspy.core;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
-import com.saurik.substrate.MS;
-
 class Func_ExecSQL extends FuncParent { 
 	public void execute(Object... args) {
 //		SQLiteDatabase db = (SQLiteDatabase) _resources;

@@ -8,10 +8,6 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.conn.ssl.SSLSocketFactory;
 
-import android.util.Log;
-
-import com.saurik.substrate.MS;
-
 // init(KeyManager[] km, TrustManager[] tm, SecureRandom sr) -> 
 // 		init(null, trustManagers, null);
 class Func_SSL_CHECK_TRUST_MANAGER extends FuncParent { 

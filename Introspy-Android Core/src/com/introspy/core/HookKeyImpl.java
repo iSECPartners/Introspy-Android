@@ -1,9 +1,5 @@
 package com.introspy.core;
 
-import android.util.Log;
-
-import com.saurik.substrate.MS;
-
 class Func_GET_KEY extends FuncParent { 
 	public void execute(Object... args) {
 		byte[] key = (byte[]) args[0];

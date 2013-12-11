@@ -3,7 +3,6 @@ package com.introspy.config;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.ListView;
 
 public class InjectConfig {
 	

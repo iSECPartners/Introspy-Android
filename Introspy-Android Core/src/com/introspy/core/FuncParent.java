@@ -100,6 +100,20 @@ class FuncParent {
 		Log.w(_TAG, "Resources type: " + 
 				(_resources !=  null ? _resources.getClass() : "None (Static method?)"));
 	}
+	
+	protected String _getStackTrace() {
+		String out = "";
+		StackTraceElement[] ste = 
+				Thread.currentThread().getStackTrace();
+		for (int i = 0; i < ste.length; i++)
+			out += ste[i].toString() + "\n";
+		return out.substring(0, out.length() - 1);
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected Object _hookInvoke(Object... args) throws Throwable {
+		return _old.invoke(_resources, args);
+	}
 }
 
 //##############################################

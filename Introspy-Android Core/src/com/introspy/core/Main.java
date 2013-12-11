@@ -5,7 +5,6 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -14,8 +13,8 @@ import android.util.Log;
 import com.saurik.substrate.*;
 
 public class Main {	
-	static private String 	_TAG = LoggerConfig.getTag();
-	static private String 	_TAG_ERROR = LoggerConfig.getTagError();
+	static private String _TAG = LoggerConfig.getTag();
+	static private String _TAG_ERROR = LoggerConfig.getTagError();
 
 	public static void initialize() {
 		final HookConfig[] _config = HookConfig.config;

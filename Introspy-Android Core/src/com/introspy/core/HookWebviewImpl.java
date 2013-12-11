@@ -1,6 +1,4 @@
 package com.introspy.core;
-import android.util.Log;
-import com.saurik.substrate.MS;
 
 //setPluginState(WebSettings.PluginState state) 
 // with android.webkit.WebSettings.PluginState.ON

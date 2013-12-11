@@ -1,10 +1,7 @@
 package com.introspy.core;
 
 import java.io.RandomAccessFile;
-import java.security.acl.LastOwnerException;
-
 import android.text.format.Time;
-import android.util.Log;
 
 public class LoadConfig {
 	// set to true here makes it faster but won't

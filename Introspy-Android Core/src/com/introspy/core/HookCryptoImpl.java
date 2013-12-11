@@ -41,7 +41,7 @@ class Func_CRYPTO extends FuncParent {
 				String o_sdata = null;
 //				if (cipher == _lastCipher && _lastMode == Cipher.DECRYPT_MODE)
 					try {
-						data  = (byte[]) _old.invoke(_resources, args);
+						data  = (byte[]) _hookInvoke(args);
 						o_sdata = new String(data);
 						if (StringHelper.isItReadable(o_sdata)) {
 							o_sdata = StringHelper.filter(o_sdata);
@@ -162,7 +162,7 @@ class Func_CRYPTO_INIT extends FuncParent {
 class Func_GET_HASH extends FuncParent { 
 	public void execute(Object... args) {		
 		try {
-			byte[] data  = (byte[]) _old.invoke(_resources, args);
+			byte[] data  = (byte[]) _hookInvoke(args);
 			MessageDigest dg = (MessageDigest) _resources;
 			_l.logBasicInfo();
 			
