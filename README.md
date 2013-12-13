@@ -56,7 +56,12 @@ restard the applications for them to be effective.
         adb uninstall com.introspy.core
         adb uninstall com.introspy.config
 
-### What if the extension crashes and the phone doesn't boot anymore
+### What if the extension crashes
+This tool has not been tested on all versions of Android. If the tool does not work on your version, please send us your error logs by doing:
+
+        adb logcat -s "InstrospyError"
+
+If due to the error the phone does not boot anymore, you can still connect to it via adb and remove the extension with:
 
         adb shell su -c rm /data/app/com.introspy.core*
 
