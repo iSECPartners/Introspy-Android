@@ -102,6 +102,8 @@ clone the source repository and build the packages yourself.
 
     git clone https://github.com/iSECPartners/introspy-android.git
 
+### Adding hooks
+See http://isecpartners.github.io/introspy-android/ for instructions.
 
 License
 -------
