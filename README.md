@@ -83,7 +83,7 @@ stack (comprizing of 3 calls) for the selected filters.
 Doing It Yourself
 -----------------
 
-### Building the iOS Tracer From Source
+### Building From Source
 
 Most users should just download and install the pre-compiled packages.
 However, if you want to modify the tool's functionality you will have to
@@ -97,7 +97,7 @@ License
 
 See ./LICENSE.
 
-Authors
+Author
 -------
 
 * Marc Blanchou
