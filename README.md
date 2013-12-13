@@ -28,8 +28,7 @@ Usage
 ---------------
 
 Users should first root their phones using publicly available documentation
-depending on their phone's model. Cydia Substrate needs to be installed and can be 
-found on Google Play (https://play.google.com/store/apps/details?id=com.saurik.substrate&hl=en).
+depending on their phone's model. Cydia Substrate must then be installed.
 
 ### Dependencies
 
@@ -37,7 +36,8 @@ The tracer will only run on a rooted device. Make sure Cydia Substrate is instal
 
 ### How to install
 
-* Install Cydia substrate. Information on how to install Cydia Substrate can be found here: http://www.cydiasubstrate.com/. You need to install it on a compatible device and make sure the substrate files are properly linked with your device.
+* Install Cydia substrate. Cydia Substrate needs to be installed and can be 
+found on Google Play (https://play.google.com/store/apps/details?id=com.saurik.substrate&hl=en). You need to install it on a compatible device and make sure the substrate files are properly linked with your device.
 
 * Install Introspy-Android Core.apk on a device where Cydia Substrate is installed with:
 
@@ -67,8 +67,6 @@ If due to the error the phone does not boot anymore, you can still connect to it
 
 Reporting
 -----------------
-
-The analyzer requires Python 2.6 or 2.7.
 
 #### Reporting
 
