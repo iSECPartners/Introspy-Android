@@ -27,12 +27,11 @@ See http://isecpartners.github.io/introspy-android/ for a quick introduction.
 Usage
 ---------------
 
-Users should first root their phones using publicly available documentation
-depending on their phone's model. Cydia Substrate must then be installed.
+The Introspy Configuration and Core packages must be installed on a rooted phone where Cydia Substrate is installed.
 
 ### Dependencies
 
-The tracer will only run on a rooted device. Make sure Cydia Substrate is installed and is compatible for your device.
+The tool will only run on a rooted device. Make sure Cydia Substrate is installed and is compatible for your device.
 
 ### How to install
 
