@@ -53,8 +53,12 @@ restard the applications for them to be effective.
 
 ### How to uninstall
 
-        adb install Introspy-Android Core.apk
-        adb install Introspy-Android Config.apk
+        adb uninstall com.introspy.core
+        adb uninstall com.introspy.config
+
+### What if the extension crashes and the phone doesn't boot anymore
+
+        adb shell su -c rm /data/app/com.introspy.core*
 
 Reporting
 -----------------
@@ -63,16 +67,18 @@ The analyzer requires Python 2.6 or 2.7.
 
 #### Reporting
 
-Relevant data including potential issues related to the APIs hooked is dumped in
+* Relevant data including potential issues related to the APIs hooked is dumped in
 a database and in the system logs. You can do the following commands to display them:
 
-Display the complete logs:
-	adb logcat -s "Instrospy"
-	
-Display potential issues in logs:
-	adb logcat -s "Instrospy:W"
+* Display the complete logs:
 
-Use the Android version of the analyzer (TBD, it will be pushed to a different 
+        adb logcat -s "Instrospy"
+        
+* Display potential issues:
+
+        adb logcat -s "Instrospy"
+        
+* Use the Android version of the analyzer (TBD, it will be pushed to a different 
 github repository soon) to generate an HTML formatted report.
 
 ### Display relevant call stacks
