@@ -1,6 +1,8 @@
-package com.introspy.core;
+package com.introspy.hooks;
+import com.introspy.core.IntroHook;
 
 import java.lang.reflect.Method;
+import java.security.MessageDigest;
 
 import android.util.Log;
 
@@ -19,8 +21,8 @@ class Intro_HASH extends IntroHook {
 	        	return; */
 	    
 		if (args[0] != null) {
-            _l.logBasicInfo();
-            String input = StringHelper.getReadableByteArr((byte[])args[0]);            
+            _logBasicInfo();
+            String input = _getReadableByteArr((byte[])args[0]);            
             
             byte[] output = null;
             String s_output = "";
@@ -33,7 +35,7 @@ class Intro_HASH extends IntroHook {
                             Class<?> noparams[] = {};
                             Method xmethod = cls.getDeclaredMethod("digest", noparams);
                             output = (byte[]) xmethod.invoke(obj);
-                            s_output = StringHelper.getReadableByteArr(output);
+                            s_output = _getReadableByteArr(output);
                     }
                     catch (Exception e) {
                     	Log.w(_TAG_ERROR, "Error in Hash func: " + e);
@@ -56,19 +58,38 @@ class Intro_HASH extends IntroHook {
                     algoName = "error: " + e;        
             }
             
-            _l.logLine("-> Hash of : [" + input + "] is: [" + 
+            _logLine("-> Hash of : [" + input + "] is: [" + 
                             s_output +"] , Algo: [" + algoName + "]");
             
-            _l.logParameter("Input", input);
-            _l.logParameter("Output", s_output);
-            _l.logParameter("Algo", algoName);
+            _logParameter("Input", input);
+            _logParameter("Algo", algoName);
+            _logReturnValue("Output", s_output);
             
             if (algoName.contains("MD5")) {
-                    _l.logFlush_W("MD5 used, this hashing algo " +
+                    _logFlush_W("MD5 used, this hashing algo " +
                     		"is broken and should not be used");
             }
             else
-                    _l.logFlush_I();
+                    _logFlush_I();
+		}
+	}
+}
+
+class Intro_GET_HASH extends Intro_CRYPTO { 
+	public void execute(Object... args) {		
+		try {
+			byte[] data  = (byte[]) _hookInvoke(args);
+			MessageDigest dg = (MessageDigest) _resources;
+			_logBasicInfo();
+			
+			String sdata = _getReadableByteArr(data);
+			
+			_logReturnValue("Data", sdata);
+			_logParameter("Algo", dg);
+			
+			_logFlush_I("-> Algo: " + dg + ", Data: " + sdata);
+		} catch (Throwable e) {
+			Log.i(_TAG_ERROR, "Error in Fun_GET_HASH" + e);
 		}
 	}
 }

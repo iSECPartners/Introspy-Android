@@ -2,22 +2,20 @@ package com.introspy.core;
 
 import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.Member;
-import java.lang.reflect.Method;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-
 import android.util.Log;
+
+import com.introspy.Logger.LoggerConfig;
+import com.introspy.hooks.HookList;
 import com.saurik.substrate.*;
 
 public class Main {	
-	static private String _TAG = LoggerConfig.getTag();
+//	static private String _TAG = LoggerConfig.getTag();
 	static private String _TAG_ERROR = LoggerConfig.getTagError();
-
+	static private String _TAG_LOG = LoggerConfig.getTagLog();
+	static private boolean _debug = false;
+	
 	public static void initialize() {
-		final HookConfig[] _config = HookConfig.config;
+		final HookConfig[] _config = HookList.getHookList();
 			for (final HookConfig elemConfig : _config) {
 				if (!elemConfig.isActive())
 					continue;
@@ -32,7 +30,7 @@ public class Main {
 		
 		MS.hookClassLoad("android.app.ContextImpl", new MS.ClassLoadHook() {
 			public void classLoaded(Class<?> resources) { 
-				_initApplicationState(resources);
+				ApplicationState.initApplicationState(resources);
 			}
 		});
 	}
@@ -45,7 +43,7 @@ public class Main {
 		final String methodName = elemConfig.getMethodName();
 		final Class<?>[] parameters = elemConfig.getParameters();
 		
-		Log.i(_TAG, "### Hooking: " + className + "->" + 
+		Log.i(_TAG_LOG, "### Hooking: " + className + "->" + 
 				methodName + "() with " + 
         		parameters.length + " args");
 		try {
@@ -81,9 +79,9 @@ public class Main {
 			Object... args) {
 		
 		String packageName = ApplicationConfig.getPackageName();
-		String type = elemConfig.getType();
+		String type = elemConfig.getSubType();
 		if (packageName == null)
-			ApplicationConfig.setPackageName("System?");
+			ApplicationConfig.setPackageName("???");
 		String dataDir = ApplicationConfig.getDataDir();
 		
 		if ((LoadConfig.getInstance().initConfig(dataDir) && 
@@ -103,68 +101,17 @@ public class Main {
 					elemConfig.getFunc().enableDBlogger();
 				
 				elemConfig.getFunc().init(elemConfig, resources, old, args);
+				if (_debug)
+					Log.i(_TAG_LOG, "=== Calling: " + elemConfig.getMethodName());
+				
 				elemConfig.getFunc().execute(args);
 			} catch (Exception e) {
 				Log.w(_TAG_ERROR, "-> Error in injected code: " + e);
 				Log.w(_TAG_ERROR, ApplicationConfig.getPackageName() + 
 						", method: " + elemConfig.getMethodName() + 
 						", class: " + elemConfig.getClassName());
+				// Log.w(_TAG_ERROR, LoggerErrorHandler._getStackTrace());
 			}
 		}
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected static void _initApplicationState(Class<?> resources) {
-		
-		String methodName = "getPackageName";
-		Class<?>[] params = new Class<?>[]{};						
-		Method pMethod = null;
-		try { 
-			pMethod = resources.getMethod(methodName, params);
-		} catch (Exception e) {
-            Log.w(_TAG_ERROR, "Error - No such method: " + methodName);
-            return;
-		}
-
-		final MS.MethodPointer old = new MS.MethodPointer();
-		MS.hookMethod(resources, pMethod, new MS.MethodHook() {
-					public Object invoked(Object resources, 
-						Object... args) throws Throwable {
-					
-						String packageName = (String)old.invoke(resources, args);
-						if (ApplicationConfig.getPackageName() == null || 
-								ApplicationConfig.getPackageName() == "android") {
-							ApplicationConfig.setPackageName(packageName);
-						
-							Class<?> cls = Class.forName("android.app.ContextImpl");
-							Class<?> noparams[] = {};
-							Method _method = cls.getDeclaredMethod("getApplicationContext", noparams);
-							
-							Context context = (Context) _method.invoke(resources);
-							ApplicationConfig.setContext(context);
-							
-							//PackageManager pm = context.getPackageManager();
-							_method = cls.getDeclaredMethod("getPackageManager", noparams);
-							PackageManager pm = (PackageManager) _method.invoke(resources);
-
-							
-							android.content.pm.ApplicationInfo ai = 
-									pm.getApplicationInfo(packageName, 0);
-					
-							if ((ai.flags & 0x81) != 0) {
-								ApplicationConfig.disable();
-							}
-							else {
-								try {
-								    PackageInfo p = pm.getPackageInfo(packageName, 0);
-								    ApplicationConfig.setDataDir(p.applicationInfo.dataDir);
-								} catch (NameNotFoundException e) {
-								    Log.w(_TAG_ERROR, "Error Package name not found ", e);
-								}
-							}
-						}
-						return packageName;
-					}
-		}, old);
 	}
 }

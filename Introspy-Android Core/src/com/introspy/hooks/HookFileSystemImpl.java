@@ -1,4 +1,5 @@
-package com.introspy.core;
+package com.introspy.hooks;
+import com.introspy.core.IntroHook;
 
 import java.io.File;
 
@@ -29,20 +30,18 @@ class Intro_FILE_CHECK_DIR extends Intro_FILE_PARENT {
 		try {
 			// String root = _dataDir + "/" + args[0];
 			String path = "[" +  args[0] + "]";
-			_l.logParameter("Path", path);
+			_logParameter("Path", path);
 			if (is_SD_card(path)) {
-				_l.logBasicInfo();
-				_l.logFlush_W("Read/write on sdcard: " + path);
+				_logBasicInfo();
+				_logFlush_W("Read/write on sdcard: " + path);
 			} else {
 				// one liner on this to avoid too much noise
-				_packageName = ApplicationConfig.getPackageName();
-				_dataDir = ApplicationConfig.getDataDir();
-				_l.logFlush_I("### FS:"+ _packageName + ":" + path);
+				_logFlush_I("### FS:"+ _packageName + ":" + path);
 			}
 			
 		} catch (Exception e) {
 			Log.w("IntrospyLog", "Exception in Intro_FILE_CHECK_DIR: " + e);
-			Log.w("IntrospyLog", "-> App path: " + ApplicationConfig.getDataDir() + 
+			Log.w("IntrospyLog", "-> App path: " + _dataDir + 
 					"\n" + e.fillInStackTrace());
 		}
 	}
@@ -56,10 +55,10 @@ class Intro_CHECK_FS_SET extends Intro_FILE_PARENT {
 				(Boolean)args[1] == false) {
 			//super.execute(config, resources, old, args);
 			File f = (File) _resources;
-			_l.logBasicInfo();
-			_l.logParameter("Mode", "WORLD read/write");
-			_l.logParameter("Path", f.getAbsolutePath());
-			_l.logFlush_W("Writing file with WORLD read/write mode: " + 
+			_logBasicInfo();
+			_logParameter("Mode", "WORLD read/write");
+			_logParameter("Path", f.getAbsolutePath());
+			_logFlush_W("Writing file with WORLD read/write mode: " + 
 						" in " + f.getAbsolutePath());
 		}
 	}
@@ -69,11 +68,11 @@ class Intro_FILE_CHECK_MODE extends Intro_FILE_PARENT {
 	@SuppressWarnings("deprecation")
 	public void execute(Object... args) {
 		// arg0 is the path
-		String path = ": [" + ApplicationConfig.getDataDir() + "/" +  (String)args[0] + "]";
+		String path = ": [" + _dataDir + "/" +  (String)args[0] + "]";
 		if (is_SD_card(path)) {
-			_l.logBasicInfo();
-			_l.logParameter("Path", path);
-			_l.logFlush_W("Read/write on sdcard: " + path);
+			_logBasicInfo();
+			_logParameter("Path", path);
+			_logFlush_W("Read/write on sdcard: " + path);
 		}
 		else {
 			// arg1 is the mode
@@ -97,9 +96,9 @@ class Intro_FILE_CHECK_MODE extends Intro_FILE_PARENT {
 			
 			if (mode == android.content.Context.MODE_WORLD_READABLE || 
 					mode == android.content.Context.MODE_WORLD_WRITEABLE) {
-				_l.logBasicInfo();
-				_l.logParameter("Mode", smode);
-				_l.logFlush_W("Writing file with dangerous mode: " + 
+				_logBasicInfo();
+				_logParameter("Mode", smode);
+				_logFlush_W("Writing file with dangerous mode: " + 
 							smode + " in " + path);
 			}
 		}

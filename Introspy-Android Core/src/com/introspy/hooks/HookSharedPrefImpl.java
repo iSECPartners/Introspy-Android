@@ -1,4 +1,5 @@
-package com.introspy.core;
+package com.introspy.hooks;
+import com.introspy.core.IntroHook;
 
 import java.util.Map;
 
@@ -12,7 +13,8 @@ class Intro_PREF_PARENT extends IntroHook {
 
 class Intro_CHECK_SHARED_PREF extends IntroHook { 
 	protected static boolean _onlyRetrievedPrefOnce = true;
-	protected static boolean _prefRetrieved = true; // true means it's not dumped
+	protected static boolean _prefRetrieved = true; 
+	
 	@SuppressWarnings("deprecation")
 	public void execute(Object... args) {
 		
@@ -20,17 +22,17 @@ class Intro_CHECK_SHARED_PREF extends IntroHook {
 		if (!_onlyRetrievedPrefOnce || 
 				(_onlyRetrievedPrefOnce && !_prefRetrieved)) {
 			String prefName = (String) args[0];
-			_l.logParameter("Preference Name", args[0]);
-			_l.logLine("### PREF:"+ApplicationConfig.getPackageName() + 
+			_logParameter("Preference Name", args[0]);
+			_logLine("### PREF:"+ _packageName + 
 					":getSharedPref:"+prefName);
 			// display the pref retrieved
 			try {
 				SharedPreferences prefs = (SharedPreferences) 
 						_hookInvoke(args);
 				if (prefs != null && prefs.getAll().size() > 0)
-					_l.logFlush_I("-> " + prefs.getAll());
+					_logFlush_I("-> " + prefs.getAll());
 			} catch (Throwable e) {
-				_l.logLine("-> not able to retrieve preferences");
+				_logLine("-> not able to retrieve preferences");
 			}
 			_prefRetrieved = true;
 		}
@@ -45,9 +47,9 @@ class Intro_CHECK_SHARED_PREF extends IntroHook {
 			smode = "MODE_WORLD_WRITEABLE";
 		
 		if (!smode.isEmpty()) {
-			_l.logParameter("Preference Name", args[0]);
-			_l.logParameter("Mode: ", smode);
-			_l.logFlush_W("Shared preference accessible to the WORLD. " +
+			_logParameter("Preference Name", args[0]);
+			_logParameter("Mode: ", smode);
+			_logFlush_W("Shared preference accessible to the WORLD. " +
 					"(MODE: " + smode + ")");
 		}
 	}
@@ -61,7 +63,7 @@ class Intro_GET_SHARED_PREF extends IntroHook {
 			}
 			// args[1] is the default value 
 			
-			_l.logParameter("Preference Name", args[0]);
+			_logParameter("Preference Name", args[0]);
 			String out = "### PREF:"+_packageName + 
 							":getSharedPref:"+ _methodName +
 							"; name: [" + args[0] + "]" +
@@ -77,12 +79,12 @@ class Intro_GET_SHARED_PREF extends IntroHook {
 			
 			if (o != null) {
 				out += "; retrieves: ["+o+"]";
-				_l.logReturnValue("Value", o);
-				_l.logFlush_I(out);
+				_logReturnValue("Value", o);
+				_logFlush_I(out);
 			}
 			else {
-				_l.logLine(out);
-				_l.logFlush_I("-> Preference not found or incorrect type specified");
+				_logLine(out);
+				_logFlush_I("-> Preference not found or incorrect type specified");
 			}
 	}
 }
@@ -91,11 +93,11 @@ class Intro_PUT_SHARED_PREF extends IntroHook {
 	public void execute(Object... args) {
 		
 		String prefName = (String) args[0]; // name of pref to retrieve
-		_l.logParameter("Preference Name", args[0]);
-		_l.logParameter("Value", args[1]);
-		String out = "### PREF:"+ApplicationConfig.getPackageName() + ":writeSharedPref:"
+		_logParameter("Preference Name", args[0]);
+		_logParameter("Value", args[1]);
+		String out = "### PREF:"+_packageName + ":writeSharedPref:"
 						+prefName+", value: "+args[1];
-		_l.logFlush_I(out);
+		_logFlush_I(out);
 	}
 }
 
@@ -106,13 +108,13 @@ class Intro_CONTAINS_SHARED_PREF extends IntroHook {
 
 		try {
 			boolean o = (Boolean) _hookInvoke(args);
-			_l.logParameter("Preference Name", args[0]);
+			_logParameter("Preference Name", args[0]);
 			if (o == false) {
-				out = "### PREF:"+ApplicationConfig.getPackageName()+
+				out = "### PREF:"+_packageName+
 						":contains:"+ prefName;
-				_l.logReturnValue("Value", o);
-				_l.logLine(out);
-				_l.logFlush_W("Preference not found (Hidden pref?)");
+				_logReturnValue("Value", o);
+				_logLine(out);
+				_logFlush_W("Preference not found (Hidden pref?)");
 			}
 		} catch (Throwable e) {
 			Log.i("IntrospyLog", "error in Intro_CONTAINS_SHARED_PREF: "+e);
@@ -130,18 +132,18 @@ class Intro_GET_ALL_SHARED_PREF extends Intro_PREF_PARENT {
 			@SuppressWarnings("unchecked")
 			Map<String,?> keys = (Map<String, ?>) _hookInvoke(args);
 			if ( keys != null && keys.size() > 0) {
-				_l.logLine("### PREF:"+ApplicationConfig.getPackageName()+":getAll:");
+				_logLine("### PREF:"+_packageName+":getAll:");
 				for(Map.Entry<String,?> entry : keys.entrySet()){
-		            _l.logLine("-> " + entry.getKey() + ": " + 
+		            _logLine("-> " + entry.getKey() + ": " + 
 		                                   entry.getValue().toString());            
 				}
 			}
-			_l.logFlush_I();
+			_logFlush_I();
 			_allPrefsAlreadyRetrieved = true;
 		} catch (Throwable e) {
 			Log.i(_TAG_ERROR, "-> not able to retrieve all " +
 					"preferences (get All in " + 
-					ApplicationConfig.getPackageName()+"). Error: " + e);
+					_packageName+"). Error: " + e);
 		}
 	}
 }

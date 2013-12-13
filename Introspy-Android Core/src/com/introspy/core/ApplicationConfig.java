@@ -7,14 +7,13 @@ public class ApplicationConfig {
    private static String 	_packageName = null;
    private static String 	_dataDir = null;
    private static LoadConfig _loadConfig = null;
-   private static Boolean 	_enabled = true;
+   private static Boolean 	_enabled = false;
    private static Context 	_context = null;
    
    public static boolean g_verbose_errors = false;
    public static boolean g_debug = false;
    public static boolean g_hook_em_all = true;
 
-   
    // Private constructor prevents instantiation from other classes
    private ApplicationConfig() {}
 
@@ -49,10 +48,12 @@ public class ApplicationConfig {
    public static void disable() {
 	   _enabled = false;
    }
-
+   public static void enable() {
+	   _enabled = true;
+   }
+   
    public static boolean isEnabled() {
 		return _enabled;
    }
-
-
+   
 }

@@ -1,8 +1,10 @@
 
-package com.introspy.core;
+package com.introspy.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.introspy.core.ApplicationConfig;
 
 import android.content.ContentValues;
 import android.content.Context;

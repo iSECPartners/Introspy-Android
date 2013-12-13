@@ -1,4 +1,5 @@
-package com.introspy.core;
+package com.introspy.Logger;
+import com.introspy.core.*;
 
 import android.util.Log;
 
@@ -28,15 +29,15 @@ public class LoggerDB extends LoggerTraces {
 		"</dict></plist>";
 	
 	protected void _logDBParameter(String name, String value) {
-		_pListArgsBody += "<key>" + StringHelper.escapeXMLChars(name) + "</key>" +
-					"<string>" + StringHelper.escapeXMLChars(value) + "</string>";
+		_pListArgsBody += "<key>" + _escapeXMLChars(name) + "</key>" +
+					"<string>" + _escapeXMLChars(value) + "</string>";
 	}
 	
 	protected void _logDBReturnValue(String name, String value) {
 		// not using the name in the DB here yet
 		_pListRetBody = 
 				"<key>returnValue</key>" + 
-				"<string>" + StringHelper.escapeXMLChars(value) + "</string>"; 
+				"<string>" + _escapeXMLChars(value) + "</string>"; 
 	}
 	
 	protected String _logCreatePlistArgs() {
@@ -61,8 +62,8 @@ public class LoggerDB extends LoggerTraces {
 					_logCreatePlistArgs(), 
 					logType,
 //					(logType.equalsIgnoreCase("W") ? _notes : ""),
-					StringHelper.escapeXMLChars(_notes),
-					StringHelper.escapeXMLChars(_traces));
+					_escapeXMLChars(_notes),
+					_escapeXMLChars(_traces));
 			db.close();
 		}
 		catch (Exception e)  {

@@ -2,8 +2,8 @@ package com.introspy.core;
 
 import android.util.Base64;
 
-public class StringHelper {
-	static public String byteArrayToHex(byte[] a) {
+public class IntroStringHelper {
+	protected String _byteArrayToHex(byte[] a) {
 		   StringBuilder sb = new StringBuilder();
 		   for(byte b: a)
 		      sb.append(String.format("%02x-", b&0xff));
@@ -11,29 +11,30 @@ public class StringHelper {
 		   return sb.toString();
 		}
 
-	static public String byteArrayToReadableStr(byte[] a) {
+	protected String _byteArrayToReadableStr(byte[] a) {
 		   StringBuilder sb = new StringBuilder();
 		   for(byte b: a) {
 			   if (b >= 32 && b < 127)
-				   sb.append(String.valueOf(b));
+				   sb.append(String.format("%c", b));
 			   else
 				   sb.append('.');
 		   }
-		   sb.deleteCharAt(sb.length()-1);
+		   //sb.deleteCharAt(sb.length()-1);
 		   return sb.toString();
 		}
 	
-	static public String byteArrayToB64(byte[] a) {
+	protected String _byteArrayToB64(byte[] a) {
 		return Base64.encodeToString(a, Base64.NO_WRAP);
 	}
 	
-	// to check if a string only contains US-ASCII code point
-	static public boolean isItReadable(String input) {
+	protected Boolean _isItReadable(String input) {
 	    int readableChar = 0;
 	    for (int i = 0; i < input.length(); i++) {
 	        int c = input.charAt(i);
-	        if ((c >= 32 && c < 127) || c == 9 || 
-	        		c == 13 || c == 10 || c == 0) {
+//			Check if a string only contains US-ASCII code point
+//	        if ((c >= 32 && c < 127) || c == 9 || 
+//	        		c == 13 || c == 10 || c == 0) {
+	        if (c >= 32 && c < 127) {
 	        	readableChar++;
 	        }
 	    }
@@ -44,7 +45,7 @@ public class StringHelper {
 	    return (readableChar > (input.length() * 0.75) ? true : false);
 	}
 	
-	 static public String escapeXMLChars(String s) {
+	protected String _escapeXMLChars(String s) {
 		    return s.replaceAll("&",  "&amp;")
 		         .replaceAll("'",  "&apos;")
 		         .replaceAll("\"", "&quot;")
@@ -52,12 +53,12 @@ public class StringHelper {
 		         .replaceAll(">",  "&gt;");
 	 }
 	
-	static public String getReadableByteArr(byte[] input) {
+	protected String _getReadableByteArr(byte[] input) {
 		String out = new String(input);
-		if (!StringHelper.isItReadable(out))
-			out = StringHelper.byteArrayToB64(input);
+		if (!_isItReadable(out))
+			out = _byteArrayToB64(input);
 		else
-			out = byteArrayToReadableStr(input);
+			out = _byteArrayToReadableStr(input);
 		return out;
 	}
 }

@@ -1,6 +1,9 @@
-package com.introspy.core;
+package com.introspy.Logger;
 
-public class LoggerConfig {
+import com.introspy.core.HookConfig;
+import com.introspy.core.IntroStringHelper;
+
+public class LoggerConfig extends IntroStringHelper {
 	protected LoggerConfig() {
 	}
 	

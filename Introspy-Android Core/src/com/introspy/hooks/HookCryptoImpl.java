@@ -1,15 +1,18 @@
-package com.introspy.core;
+package com.introspy.hooks;
+import com.introspy.core.IntroHook;
 
 import java.security.Key;
-import java.security.MessageDigest;
 import java.util.Stack;
 
 import javax.crypto.Cipher;
 
 import android.util.Log;
 
+import com.introspy.core.ApplicationConfig;
+
 class Intro_CRYPTO extends IntroHook {
-	
+	protected static Cipher 	_lastCipher;
+	protected static Integer 	_lastMode;
 }
 
 class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
@@ -18,7 +21,7 @@ class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
 	public void execute(Object... args) {
 		if (_resources != null) {
 			boolean warning = false;
-			_l.logBasicInfo();			
+			_logBasicInfo();			
 			Cipher cipher = (Cipher) _resources;
 			try {
 				String algo = cipher.getAlgorithm();
@@ -26,15 +29,16 @@ class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
 				byte[] data = (byte[]) args[0];
 				if (data != null) { // when no args to doFinal (used update)
 					String i_sdata = new String(data);
-					if (StringHelper.isItReadable(i_sdata)) {
-						i_sdata = StringHelper.byteArrayToReadableStr(data);
-						_l.logParameter("input (Encrypt)", i_sdata);
-						_l.logLine("-> ENCRYPT: [" + i_sdata + "]");
+					if (_isItReadable(i_sdata)) {
+						i_sdata = _byteArrayToReadableStr(data);
+						_logParameter("input (Encrypt)", i_sdata);
+						_logLine("-> ENCRYPT: [" + i_sdata + "]");
 					}
 					else {
-						String sdata = StringHelper.byteArrayToB64(data);
-						_l.logLine("-> Input data is not in a readable format, base64 version: ["+ sdata +"]");
-						_l.logParameter("Output (converted to b64)", sdata);
+						String sdata = _byteArrayToB64(data);
+						_logLine("-> Input data is not in a readable format, " +
+									"base64: ["+ sdata +"]");
+						_logParameter("Output (converted to b64)", sdata);
 					}
 				}
 				
@@ -44,18 +48,19 @@ class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
 					try {
 						data  = (byte[]) _hookInvoke(args);
 						o_sdata = new String(data);
-						if (StringHelper.isItReadable(o_sdata)) {
-							o_sdata = StringHelper.byteArrayToReadableStr(data);
-							_l.logParameter("Ouput (Decrypt)", o_sdata);
-							_l.logLine("-> DECRYPT: [" + o_sdata + "]");
+						if (_isItReadable(o_sdata)) {
+							o_sdata = _byteArrayToReadableStr(data);
+							_logParameter("Ouput (Decrypt)", o_sdata);
+							_logLine("-> DECRYPT: [" + o_sdata + "]");
 						}
 						else {
-							String sdata = StringHelper.byteArrayToB64(data);
-							_l.logLine("-> Output data is not in a readable format, base64 version: ["+ sdata +"]");
-							_l.logReturnValue("Output (converted to b64)", sdata);
+							String sdata = _byteArrayToB64(data);
+							_logLine("-> Output data is not in a readable format," +
+										" base64: ["+ sdata +"]");
+							_logReturnValue("Output (converted to b64)", sdata);
 						}
 					} catch (Throwable e) {
-						Log.i("IntrospyLog", "doFinal function failed: "+e);
+						Log.i(_TAG_ERROR, "doFinal function failed: "+e);
 					}
 //				} else {
 //				}
@@ -63,17 +68,17 @@ class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
 				String out = "";
 				if (algo != null) {
 					out = "-> Algo: " + algo;
-					_l.logParameter("Algo", algo);
+					_logParameter("Algo", algo);
 					if (cipher.getAlgorithm().contains("ECB")) {
 						warning = true;
-						out += " - !!! ECB used";
+						out += " - !!! ECB used. ECB mode is broken and should not be used.";
 					}
 				}
 				// dump some params
 				if (cipher.getIV() != null) {
-					String iv = StringHelper.getReadableByteArr(cipher.getIV());
+					String iv = _getReadableByteArr(cipher.getIV());
 					out += "; IV: " + iv;
-					_l.logParameter("IV", iv);
+					_logParameter("IV", iv);
 
 					if (cipher.getIV()[0] == 0) {
 						Log.w("Introspy", "!!! IV of 0");
@@ -92,13 +97,13 @@ class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
 					}
 				}
 				if (cipher.getParameters() != null && ApplicationConfig.g_debug)
-					_l.logLine("Parameters: " + cipher.getParameters());
+					_logLine("Parameters: " + cipher.getParameters());
 				
 				if (algo != null || cipher.getIV() != null) {
 					if (warning)
-						_l.logFlush_W(out);
+						_logFlush_W(out);
 					else
-						_l.logFlush_I(out);
+						_logFlush_I(out);
 				}
 
 				
@@ -116,6 +121,10 @@ class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
 
 class Intro_CRYPTO_INIT extends Intro_CRYPTO { 
 	public void execute(Object... args) {
+		// let's not care about init since we are hooking 
+		// the key class already
+		// BUT it can be useful to get a state of the mode 
+		// if needed later
 		if (_resources != null) {
 			try {
 				_lastCipher = (Cipher) _resources;
@@ -134,7 +143,7 @@ class Intro_CRYPTO_INIT extends Intro_CRYPTO {
 						smode = "???";
 				}
 				
-				_l.logBasicInfo();
+				_logBasicInfo();
 				
 				String out = "-> Mode: " + smode;
 				
@@ -142,16 +151,15 @@ class Intro_CRYPTO_INIT extends Intro_CRYPTO {
 				Key key = (Key) args[1];
 				String skey = "";
 				if (key != null) {
-					out += ", Key format: " + key.getFormat() + ", Key: ";
-					skey = new String(key.getEncoded());
-					skey = StringHelper.getReadableByteArr(key.getEncoded());
-					out += skey;
+					skey = _getReadableByteArr(key.getEncoded());
+					out += ", Key format: " + key.getFormat() + 
+							", Key: [" + skey + "]";
 				}
-				_l.logParameter("Mode", smode);
-				_l.logParameter("Key", skey);
-				_l.logParameter("Key Format", key.getFormat());
+				_logParameter("Mode", smode);
+				_logParameter("Key", skey);
+				_logParameter("Key Format", key.getFormat());
 
-				_l.logFlush_I(out);
+				_logFlush_I(out);
 				
 			} catch (Exception e) {
 				Log.w(_TAG_ERROR, "Error in Intro_CRYPTO: " + e);
@@ -160,22 +168,3 @@ class Intro_CRYPTO_INIT extends Intro_CRYPTO {
 	}
 }
 
-
-class Intro_GET_HASH extends Intro_CRYPTO { 
-	public void execute(Object... args) {		
-		try {
-			byte[] data  = (byte[]) _hookInvoke(args);
-			MessageDigest dg = (MessageDigest) _resources;
-			_l.logBasicInfo();
-			
-			String sdata = StringHelper.getReadableByteArr(data);
-			
-			_l.logReturnValue("Data", sdata);
-			_l.logParameter("Algo", dg);
-			
-			_l.logFlush_I("-> Algo: " + dg + ", Data: " + sdata);
-		} catch (Throwable e) {
-			Log.i(_TAG_ERROR, "Error in Fun_GET_HASH" + e);
-		}
-	}
-}

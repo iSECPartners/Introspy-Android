@@ -1,4 +1,6 @@
-package com.introspy.core;
+package com.introspy.Logger;
+
+import com.introspy.core.*;
 
 import android.util.Log;
 
@@ -6,10 +8,6 @@ import android.util.Log;
 // for a function as it dumps stack traces for the call
 
 public class Logger extends LoggerDB {
-
-	protected void _logInit(HookConfig config) {
-		_config = config;
-	}
 	
 	private void clean() {
 		_out = "";
@@ -23,9 +21,9 @@ public class Logger extends LoggerDB {
 	
 	// ####### public
 
-	public Logger(HookConfig config) {
-		_logInit(config);
-	}
+	public void logInit(HookConfig config) {
+		_config = config;
+	}	
 	
 	public void logLine(String line) {
 		_out += line + "\n";
@@ -73,12 +71,12 @@ public class Logger extends LoggerDB {
 			_logDBParameter(name, "" + value);
 	}
 	
-	protected void logReturnValue(String name, String value) {
+	public void logReturnValue(String name, String value) {
 		if (_enableDB)
 			_logDBReturnValue(name, value);
 	}
 	
-	protected void logReturnValue(String name, Object value) {
+	public void logReturnValue(String name, Object value) {
 		if (_enableDB)
 			_logDBReturnValue(name, "" + value);
 	}

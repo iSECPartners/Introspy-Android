@@ -1,4 +1,5 @@
-package com.introspy.core;
+package com.introspy.hooks;
+import com.introspy.core.IntroHook;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -13,7 +14,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 class Intro_SSL_CHECK_TRUST_MANAGER extends IntroHook { 
 	public void execute(Object... args) {
 		
-		_l.logBasicInfo();
+		_logBasicInfo();
 		TrustManager[] tm_arr = (TrustManager[]) args[1];
 		// check the trust manager
 		if (tm_arr != null && tm_arr[0] != null) {
@@ -29,9 +30,9 @@ class Intro_SSL_CHECK_TRUST_MANAGER extends IntroHook {
 				check = true;
 			}
 			if (check)
-				_l.logFlush_W("The app does not verify SSL certs");
+				_logFlush_W("The app does not verify SSL certs");
 			else
-				_l.logFlush_I("Use of a custom Trust Manager, the app may do cert. pinning OR validate any cert");
+				_logFlush_I("Use of a custom Trust Manager, the app may do cert. pinning OR validate any cert");
 		}
 	}
 }
@@ -42,8 +43,8 @@ class Intro_SSL_CHECK_TRUST_SOCKETFACTORY extends IntroHook {
 		// should only display data when there is a potential issue
 		
 		// check not implemented yet
-		_l.logBasicInfo();
-		_l.logFlush_W("Use of a custom SSLSocketFactory, the app may do cert. pinning OR validate any cert");
+		_logBasicInfo();
+		_logFlush_W("Use of a custom SSLSocketFactory, the app may do cert. pinning OR validate any cert");
 	}
 }
 
@@ -54,9 +55,9 @@ class Intro_CHECK_HOSTNAME_VERIFIER extends IntroHook {
 		// this only display data when there is a potential issue
 		if ((org.apache.http.conn.ssl.X509HostnameVerifier)args[0] == 
 				SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER) {
-			_l.logBasicInfo();
-			_l.logParameter("SSLSocketFactory", "ALLOW_ALL_HOSTNAME_VERIFIER");
-			_l.logFlush_W("HostNameVerifier set to accept ANY hostname");
+			_logBasicInfo();
+			_logParameter("SSLSocketFactory", "ALLOW_ALL_HOSTNAME_VERIFIER");
+			_logFlush_W("HostNameVerifier set to accept ANY hostname");
 		}
 	}
 }
@@ -68,8 +69,9 @@ class Intro_CHECK_URI extends IntroHook {
 		// arg0 is a uri (string or uri (this may not actually work))
 		String uri = (String) args[0];
 		if (uri.contains("http:")) {
-			_l.logBasicInfo();
-			_l.logFlush_W("No SSL: ["+uri+"]");
+			_logBasicInfo();
+			_logParameter("URI", uri);
+			_logFlush_W("No SSL: ["+uri+"]");
 		}
 	}
 }

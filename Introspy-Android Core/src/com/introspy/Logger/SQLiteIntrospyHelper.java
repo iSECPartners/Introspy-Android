@@ -1,4 +1,4 @@
-package com.introspy.core;
+package com.introspy.Logger;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

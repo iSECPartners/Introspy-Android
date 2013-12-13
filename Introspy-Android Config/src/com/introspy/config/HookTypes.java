@@ -15,7 +15,7 @@ public class HookTypes extends UpdateAppList {
 	private Boolean _alwaysOverwriteConfig = false;
 	
 	protected static String[] _hookTypes ={
-			"CRYPTO",
+			"GENERAL CRYPTO",
 			"KEY",
 			"HASH",
 			"FS", 
