@@ -67,7 +67,9 @@
 <h3>
 <a name="easy-way-to-add-hooks" class="anchor" href="#easy-way-to-add-hooks"><span class="octicon octicon-link"></span></a>Easy way to add hooks</h3>
 
-<p>The tool was designed to make it easy for anyone to add hooks. To do so, create a HookConfig object in HookList.java (com.introspy.hooks) as well as a call handler class in the same package. Example:</p>
+<p>The tool was designed to make it easy for anyone to add hooks. To do so, you need to create a HookConfig object in HookList.java (com.introspy.hooks) as well as a call handler class in the same package. This class should extend IntroHook and implement an execute() method:</p>
+
+<p>Example:</p>
 
 <p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/new_object.PNG?token=999998__eyJzY29wZSI6IlJhd0Jsb2I6aVNFQ1BhcnRuZXJzL0ludHJvc3B5LUFuZHJvaWQvbWFzdGVyL2ltYWdlcy9uZXdfb2JqZWN0LlBORyIsImV4cGlyZXMiOjEzODc1ODg3NTF9--237c241433a8ad30bd11523b234bb87937adcb9e" alt="Hook Config"></p>
 
