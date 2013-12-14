@@ -2,7 +2,7 @@ package com.introspy.core;
 
 import android.util.Log;
 
-import com.introspy.Logger.LoggerConfig;
+import com.introspy.logger.LoggerConfig;
 import com.saurik.substrate.MS;
 
 @SuppressWarnings("rawtypes")

@@ -1,4 +1,4 @@
-package com.introspy.Logger;
+package com.introspy.logger;
 
 import com.introspy.core.*;
 

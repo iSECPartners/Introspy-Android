@@ -1,5 +1,4 @@
-package com.introspy.Logger;
-import com.introspy.core.*;
+package com.introspy.logger;
 
 import android.util.Log;
 

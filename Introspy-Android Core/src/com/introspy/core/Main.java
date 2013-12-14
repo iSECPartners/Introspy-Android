@@ -4,8 +4,8 @@ import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.Member;
 import android.util.Log;
 
-import com.introspy.Logger.LoggerConfig;
 import com.introspy.hooks.HookList;
+import com.introspy.logger.LoggerConfig;
 import com.saurik.substrate.*;
 
 public class Main {	

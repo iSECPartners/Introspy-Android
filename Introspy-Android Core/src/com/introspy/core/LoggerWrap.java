@@ -1,6 +1,6 @@
 package com.introspy.core;
 
-import com.introspy.Logger.Logger;
+import com.introspy.logger.Logger;
 
 public class LoggerWrap extends IntroStringHelper {
 	private Logger _l = new Logger();

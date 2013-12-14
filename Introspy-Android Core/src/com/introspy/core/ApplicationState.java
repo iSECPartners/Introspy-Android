@@ -2,7 +2,7 @@ package com.introspy.core;
 
 import java.lang.reflect.Method;
 
-import com.introspy.Logger.LoggerConfig;
+import com.introspy.logger.LoggerConfig;
 import com.saurik.substrate.MS;
 
 import android.content.Context;

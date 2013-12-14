@@ -1,4 +1,4 @@
-package com.introspy.Logger;
+package com.introspy.logger;
 
 public class LoggerErrorHandler {
 	static public  String _getStackTrace() {

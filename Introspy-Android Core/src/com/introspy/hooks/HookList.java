@@ -202,31 +202,31 @@ public class HookList {
 		 *  ############### IPC Methods
 		 */ 					
 			
-			new HookConfig(true, "IPC", "IPC SERVICE", "android.content.ContextWrapper", "startService", 
+			new HookConfig(true, "IPC", "IPC", "android.content.ContextWrapper", "startService", 
 					new Intro_DUMP_INTENT(), new Class<?>[]{Intent.class}, ""),
-			new HookConfig(false, "IPC", "IPC ACTIVITY", "android.content.ContextWrapper", "startActivities", 
+			new HookConfig(false, "IPC", "IPC", "android.content.ContextWrapper", "startActivities", 
 					new Intro_DUMP_INTENT(), new Class<?>[]{Intent[].class}, ""),
 				
 			// Android > 4.1
-			new HookConfig(false, "IPC", "IPC ACTIVITY", "android.content.ContextWrapper", "startActivity", 
+			new HookConfig(false, "IPC", "IPC", "android.content.ContextWrapper", "startActivity", 
 					new Intro_DUMP_INTENT(), new Class<?>[]{Intent.class, Bundle.class}, ""),
 
-			new HookConfig(true, "IPC", "IPC ACTIVITY", "android.content.ContextWrapper", "startActivity", 
+			new HookConfig(true, "IPC", "IPC", "android.content.ContextWrapper", "startActivity", 
 					new Intro_DUMP_INTENT(), new Class<?>[]{Intent.class, Bundle.class}, ""),
-			new HookConfig(true, "IPC", "IPC ACTIVITY", "android.content.ContextWrapper", "startActivity", 
+			new HookConfig(true, "IPC", "IPC", "android.content.ContextWrapper", "startActivity", 
 					new Intro_DUMP_INTENT(), new Class<?>[]{Intent.class}, ""),	
 					
-			new HookConfig(true, "IPC", "IPC ACTIVITY", "android.content.ContextWrapper", "startActivity", 
+			new HookConfig(true, "IPC", "IPC", "android.content.ContextWrapper", "startActivity", 
 					new Intro_DUMP_INTENT(), new Class<?>[]{Intent.class}, ""),		
 
-			new HookConfig(true, "IPC", "IPC BROADCAST", "android.content.ContextWrapper", "sendBroadcast", 
+			new HookConfig(true, "IPC", "IPC", "android.content.ContextWrapper", "sendBroadcast", 
 					new Intro_DUMP_INTENT(), new Class<?>[]{Intent.class}, ""),
-			new HookConfig(true, "IPC", "IPC BROADCAST", "android.content.ContextWrapper", "sendBroadcast", 
+			new HookConfig(true, "IPC", "IPC", "android.content.ContextWrapper", "sendBroadcast", 
 					new Intro_DUMP(), new Class<?>[]{Intent.class, String.class}, ""),
 					
-			new HookConfig(true, "IPC", "IPC BROADCAST", "android.content.ContextWrapper", "registerReceiver", 
+			new HookConfig(true, "IPC", "IPC", "android.content.ContextWrapper", "registerReceiver", 
 					new Intro_IPC_RECEIVER(), new Class<?>[]{BroadcastReceiver.class, IntentFilter.class}, ""),
-			new HookConfig(true, "IPC", "IPC BROADCAST", "android.content.ContextWrapper", "registerReceiver", 
+			new HookConfig(true, "IPC", "IPC", "android.content.ContextWrapper", "registerReceiver", 
 					new Intro_IPC_RECEIVER(), new Class<?>[]{BroadcastReceiver.class, IntentFilter.class, 
 															String.class, Handler.class}, ""),
 			// TODO: more IPCs to hook here, sendBroadcast(s) for instance
@@ -234,7 +234,7 @@ public class HookList {
 															
 			// useful to find dynamically enabled IPCs
 			// crashes the zygote process on 4.2.2 (?)
-			new HookConfig(false, "IPC", "IPC GENERAL", "android.content.pm.PackageManager", "setComponentEnabledSetting", 
+			new HookConfig(false, "IPC", "IPC", "android.content.pm.PackageManager", "setComponentEnabledSetting", 
 					new Intro_IPC_MODIFIED(), new Class<?>[]{ComponentName.class, Integer.TYPE, Integer.TYPE}, ""),
 					
 		/*  ############################################
