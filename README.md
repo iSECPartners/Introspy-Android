@@ -60,7 +60,7 @@ This tool has not been tested on all versions of Android. If the tool does not w
 
         adb logcat -s "InstrospyError"
 
-If due to the error the phone does not boot anymore, you can still connect to it via adb and remove the extension with:
+If due to the error the phone does not boot anymore, you can still connect to it via adb and simply remove the extension to fix it with:
 
         adb shell su -c rm /data/app/com.introspy.core*
 
@@ -74,11 +74,11 @@ a database and in the system logs. You can do the following commands to display 
 
 * Display the complete logs:
 
-        adb logcat -s "Instrospy"
+        adb logcat -s "Introspy"
         
 * Display potential issues:
 
-        adb logcat -s "Instrospy"
+        adb logcat -s "Introspy:W"
         
 * Use the Android version of the analyzer (TBD, it will be pushed to a different 
 github repository soon) to generate an HTML formatted report.
@@ -110,4 +110,4 @@ See ./LICENSE.
 Author
 -------
 
-* Marc Blanchou
+Marc Blanchou
