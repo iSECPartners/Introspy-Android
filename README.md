@@ -50,6 +50,10 @@ The Instrospy-Android Config application displays apps the Core application will
 various filters and options applied to them. The changes are dynamic and you do not need to 
 restard the applications for them to be effective.
 
+It should be noted that the Core application can work on a device running Android SDK 9 whereas the Config application can only run from SDK 11 due to the use of the specific APIs. In order to test applications on older SDKs without the GUI, you can simply create a file named "introspy.config" containing filters you want at the root of the application directory. Example:
+
+        adb shell su -c echo "GENERAL CRYPTO, KEY, HASH, FS, IPC, PREF, URI, WEBVIEW" > /data/data/com.YOUR_APP_NAME/introspy.config
+
 ### How to uninstall
 
         adb uninstall com.introspy.core
@@ -63,6 +67,8 @@ This tool has not been tested on all versions of Android. If the tool does not w
 If due to the error the phone does not boot anymore, you can still connect to it via adb and simply remove the extension to fix it with:
 
         adb shell su -c rm /data/app/com.introspy.core*
+
+If you still have issues, it may be due to Cydia Substrate itself, which may not be compatible with your device? To uninstall it you can do the following (from Cydia Substrate's website): Hold down the volume-up button on your device you can disable Substrate while it is attempting to load modifications (such as while it is turning on and starting); this will give you an opportunity to use Google Play to uninstall things that might be broken.
 
 Reporting
 -----------------
