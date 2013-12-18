@@ -68,7 +68,7 @@ If due to the error the phone does not boot anymore, you can still connect to it
 
         adb shell su -c rm /data/app/com.introspy.core*
 
-If you still have issues, it may be due to Cydia Substrate itself, which may not be compatible with your device? To uninstall it you can do the following (from Cydia Substrate's website): Hold down the volume-up button on your device you can disable Substrate while it is attempting to load modifications (such as while it is turning on and starting); this will give you an opportunity to use Google Play to uninstall things that might be broken.
+If you still have issues, it may be due to Cydia Substrate itself, which may not be compatible with your device? To uninstall it you can do the following (from Cydia Substrate's website): "By holding down the volume-up button on your device you can disable Substrate while it is attempting to load modifications (such as while it is turning on and starting); this will give you an opportunity to use Google Play to uninstall things that might be broken."
 
 Reporting
 -----------------
