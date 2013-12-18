@@ -94,14 +94,21 @@ public class HookTypes extends UpdateAppList {
 	            
 	            if (setup == false) {
 	        		_sp.edit().putBoolean("Enabled", true).commit();
-	            	for(String item : _hookTypes ) {
-	            		_sp.edit().putBoolean(item, true).commit();
-	            	}
-	            	
+	        		
 		        	final ListView list = getListView();
-		        	for (int i = 0; i < getListAdapter().getCount(); i++) {
-		        	        list.setItemChecked(i, true);
-		        	}
+	        		for (int i = 0; i < _hookTypes.length; i++) {
+	        			
+	        			// disable the NO DB or STACK TRACES by default
+	            		if (_hookTypes[i].contains("NO DB") ||
+	            				_hookTypes[i].contains("STACK TRACES")) {
+		            		_sp.edit().putBoolean(_hookTypes[i], false).commit();
+		            		list.setItemChecked(i, false);
+	            		}
+	            		else {
+	            			_sp.edit().putBoolean(_hookTypes[i], true).commit();
+	            			list.setItemChecked(i, true);
+	            		}
+	        		}
 	            }
 	            else {
 	            	final ListView list = getListView();

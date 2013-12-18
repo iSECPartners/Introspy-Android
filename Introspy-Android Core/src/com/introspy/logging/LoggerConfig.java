@@ -1,4 +1,4 @@
-package com.introspy.logger;
+package com.introspy.logging;
 
 import com.introspy.core.HookConfig;
 import com.introspy.core.IntroStringHelper;

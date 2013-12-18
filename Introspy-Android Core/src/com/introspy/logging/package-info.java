@@ -5,4 +5,4 @@
  * @author marc blanchou
  *
  */
-package com.introspy.logger;
+package com.introspy.logging;

@@ -1,4 +1,4 @@
-package com.introspy.logger;
+package com.introspy.logging;
 
 import java.io.BufferedWriter;
 import java.io.File;

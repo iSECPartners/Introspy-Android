@@ -1,4 +1,4 @@
-package com.introspy.logger;
+package com.introspy.logging;
 
 public class SQLiteIntrospyLog {
 	  private long id;

@@ -1,5 +1,5 @@
 
-package com.introspy.logger;
+package com.introspy.logging;
 
 import java.util.ArrayList;
 import java.util.List;

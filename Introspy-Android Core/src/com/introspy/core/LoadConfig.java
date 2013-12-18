@@ -41,7 +41,8 @@ public class LoadConfig {
 		Time now = new Time();
 		now.setToNow();
 		
-		if (_lastCheck.toMillis(true) + 2000 >= now.toMillis(true)) {
+		// check for modifications only every X
+		if (_lastCheck.toMillis(true) + 3000 >= now.toMillis(true)) {
 			return _previousCheckValue;
 		}
 		

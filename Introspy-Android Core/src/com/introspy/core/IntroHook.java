@@ -2,7 +2,7 @@ package com.introspy.core;
 
 import android.util.Log;
 
-import com.introspy.logger.LoggerConfig;
+import com.introspy.logging.LoggerConfig;
 import com.saurik.substrate.MS;
 
 @SuppressWarnings("rawtypes")
@@ -51,13 +51,12 @@ class IntroHook extends LoggerWrap {
 		if (!_config.getNotes().isEmpty())
 			_logLine("Notes: " + _config.getNotes());
 		_logLine("-> Resources type: " + 
-				(_resources !=  null ? _resources.getClass() : "None (Static method?)"));
+				(_resources !=  null ? _resources.getClass() : "None"));
 		
 		try {
-			Class<?>[] parameters = _config.getParameters();
 			if (_config.getParameters() != null) {
 				int argNb = 0;
-				for (Class<?> elemParameter : parameters) {
+				for (Class<?> elemParameter : _parameters) {
 					_logLine("-> Argument " + (argNb + 1) +
 							", Data: " + args[argNb].toString() +
 							" (Type: " + elemParameter.getName() + ")"

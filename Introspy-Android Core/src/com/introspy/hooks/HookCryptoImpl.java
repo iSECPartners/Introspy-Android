@@ -47,6 +47,11 @@ class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
 //				if (cipher == _lastCipher && _lastMode == Cipher.DECRYPT_MODE)
 					try {
 						data  = (byte[]) _hookInvoke(args);
+					}
+					catch (Throwable e) {
+						Log.i(_TAG_ERROR, "doFinal function failed: "+e);
+					}
+					if (data != null) {
 						o_sdata = new String(data);
 						if (_isItReadable(o_sdata)) {
 							o_sdata = _byteArrayToReadableStr(data);
@@ -59,8 +64,6 @@ class Intro_CRYPTO_FINAL extends Intro_CRYPTO {
 										" base64: ["+ sdata +"]");
 							_logReturnValue("Output (converted to b64)", sdata);
 						}
-					} catch (Throwable e) {
-						Log.i(_TAG_ERROR, "doFinal function failed: "+e);
 					}
 //				} else {
 //				}

@@ -5,7 +5,7 @@ import java.lang.reflect.Member;
 import android.util.Log;
 
 import com.introspy.hooks.HookList;
-import com.introspy.logger.LoggerConfig;
+import com.introspy.logging.LoggerConfig;
 import com.saurik.substrate.*;
 
 public class Main {	
@@ -15,17 +15,18 @@ public class Main {
 	static private boolean _debug = false;
 	
 	public static void initialize() {
-		final HookConfig[] _config = HookList.getHookList();
-			for (final HookConfig elemConfig : _config) {
-				if (!elemConfig.isActive())
-					continue;
-				
-				MS.hookClassLoad(elemConfig.getClassName(),
-					new MS.ClassLoadHook() {
-						public void classLoaded(Class<?> resources) {
-							_hookMethod(resources, elemConfig);
-						}
-					});
+		HookConfig[] _config = HookList.getHookList();
+		
+		for (final HookConfig elemConfig : _config) {
+			if (!elemConfig.isActive())
+				continue;
+			
+			MS.hookClassLoad(elemConfig.getClassName(),
+				new MS.ClassLoadHook() {
+					public void classLoaded(Class<?> resources) {
+						_hookMethod(resources, elemConfig);
+					}
+				});
 		}
 		
 		MS.hookClassLoad("android.app.ContextImpl", new MS.ClassLoadHook() {
@@ -77,15 +78,13 @@ public class Main {
 	protected static void _hookMethodImpl(final MS.MethodPointer old,
 			Object resources, final HookConfig elemConfig,
 			Object... args) {
-		
 		String packageName = ApplicationConfig.getPackageName();
-		String type = elemConfig.getSubType();
-		if (packageName == null)
-			ApplicationConfig.setPackageName("???");
 		String dataDir = ApplicationConfig.getDataDir();
+		String type = elemConfig.getSubType();
 		
-		if ((LoadConfig.getInstance().initConfig(dataDir) && 
-				LoadConfig.getInstance().getHookTypes().contains(type))) {
+		if (packageName != null && dataDir != null && 
+				LoadConfig.getInstance().initConfig(dataDir) && 
+				LoadConfig.getInstance().getHookTypes().contains(type)) {
 			try {
 				elemConfig.getFunc().init(elemConfig, resources, old, args);
 
@@ -106,8 +105,8 @@ public class Main {
 				
 				elemConfig.getFunc().execute(args);
 			} catch (Exception e) {
-				Log.w(_TAG_ERROR, "-> Error in injected code: " + e);
-				Log.w(_TAG_ERROR, ApplicationConfig.getPackageName() + 
+				Log.w(_TAG_ERROR, "-> Error in injected code: [" + e + "]" +
+						"\nApp: " + ApplicationConfig.getPackageName() + 
 						", method: " + elemConfig.getMethodName() + 
 						", class: " + elemConfig.getClassName());
 				// Log.w(_TAG_ERROR, LoggerErrorHandler._getStackTrace());

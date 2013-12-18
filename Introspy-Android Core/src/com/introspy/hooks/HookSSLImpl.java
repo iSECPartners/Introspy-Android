@@ -19,12 +19,12 @@ class Intro_SSL_CHECK_TRUST_MANAGER extends IntroHook {
 		// check the trust manager
 		if (tm_arr != null && tm_arr[0] != null) {
 			X509TrustManager tm = (X509TrustManager) tm_arr[0];
-			X509Certificate[] chain = null;
+			X509Certificate[] chain = new X509Certificate[]{};
 			boolean check = false;
 			try {
 				tm.checkClientTrusted(chain, "");
 				tm.checkServerTrusted(chain, "");
-			} catch (CertificateException e) {
+			} catch (Exception e) { // should change to CertificateException
 				// if it goes here with an invalid cert
 				// the app may verify certs
 				check = true;
@@ -32,7 +32,8 @@ class Intro_SSL_CHECK_TRUST_MANAGER extends IntroHook {
 			if (check)
 				_logFlush_W("The app does not verify SSL certs");
 			else
-				_logFlush_I("Use of a custom Trust Manager, the app may do cert. pinning OR validate any cert");
+				_logFlush_I("Use of a custom Trust Manager, " +
+						"the app may do cert. pinning OR validate any cert");
 		}
 	}
 }
@@ -44,7 +45,8 @@ class Intro_SSL_CHECK_TRUST_SOCKETFACTORY extends IntroHook {
 		
 		// check not implemented yet
 		_logBasicInfo();
-		_logFlush_W("Use of a custom SSLSocketFactory, the app may do cert. pinning OR validate any cert");
+		_logFlush_W("Use of a custom SSLSocketFactory, " +
+				"the app may do cert. pinning OR validate any cert");
 	}
 }
 
