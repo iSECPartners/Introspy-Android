@@ -27,28 +27,19 @@ See http://isecpartners.github.io/introspy-android/ for a quick introduction.
 Usage
 ---------------
 
-The Introspy Configuration and Core packages must be installed on a rooted phone where Cydia Substrate is installed.
 
-### Dependencies
-
-The tool will only run on a rooted device. Make sure Cydia Substrate is installed and is compatible for your device.
-
-### How to install
-
-* Install Cydia substrate. Cydia Substrate needs to be installed and can be 
-found on Google Play (https://play.google.com/store/apps/details?id=com.saurik.substrate&hl=en). You need to install it on a compatible device and make sure the substrate files are properly linked with your device.
-
+* Ensure that Cydia Substrate has been deployed on your test device. The installer requires a rooted device and can be found on the Google Play store at https://play.google.com/store/apps/details?id=com.saurik.substrate&hl=en 
+* Download the pre-compiled APK available at https://github.com/iSECPartners/Android-SSL-TrustKiller/releases
 * Install Introspy-Android Core.apk on a device where Cydia Substrate is installed with:
 
         adb install Introspy-Android Core.apk
 
-* Install Introspy-Android Config.apk on a device where Cydia Substrate is installed with:
+* Install Introspy-Android Config.apk:
 
         adb install Introspy-Android Config.apk
 
 The Instrospy-Android Config application displays apps the Core application will hook and the
-various filters and options applied to them. The changes are dynamic and you do not need to 
-restard the applications for them to be effective.
+various filters and options applied to them. This application need root access (you can use supersu to give temporary root access to the application). The changes are dynamic and you do not need to restard the applications for them to be effective.
 
 It should be noted that the Core application can work on a device running Android 2.3 and above whereas the Config application can only run from Android 3.0 on due to the use of specific APIs. In order to test applications on older SDKs without the GUI by only using the Core application, you can simply create a file named "introspy.config" containing filters you want to hook in the directory of the applications you want to test. Example:
 
