@@ -154,6 +154,8 @@ Then you need to add the Cydia Substrate SDK to eclipse. See here for instructio
 ### Adding hooks
 Adding hooks is simple and can be done within the com.introspy.custom_hooks module. See the prefilled example in the code (CustomHookList.java and HookExampleImpl.java) and make sure to enable the "CUSTOM HOOKS" option in the Introspy Config application. See http://isecpartners.github.io/Introspy-Android/ for more instructions.
 
+Notes: Some methods simply cannot be hooked due to potential issues in Cydia Substrate and the hook may just crash the process. Also, make sure to not try hooking abstract methods as it will just throw an exception that is never caught by Cydia Substrate (and will just crash the process).
+
 License
 -------
 
