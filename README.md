@@ -152,7 +152,7 @@ clone the source repository and build the packages yourself.
 Then you need to add the Cydia Substrate SDK to eclipse. See here for instructions on how to do so: http://www.cydiasubstrate.com/id/73e45fe5-4525-4de7-ac14-6016652cc1b8/.
 
 ### Adding hooks
-Adding hooks is simple and can be done within the com.introspy.custom_hooks module. See the prefilled example in the code (CustomHookList.java and HookExampleImpl.java) and enable the "CUSTOM HOOKS" option from the Introspy Config application. See http://isecpartners.github.io/Introspy-Android/ for more instructions.
+Adding hooks is simple and can be done within the com.introspy.custom_hooks module. See the prefilled example in the code (CustomHookList.java and HookExampleImpl.java) and make sure to enable the "CUSTOM HOOKS" option in the Introspy Config application. See http://isecpartners.github.io/Introspy-Android/ for more instructions.
 
 License
 -------
