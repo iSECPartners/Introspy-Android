@@ -50,7 +50,7 @@ The Instrospy-Android Config application displays apps the Core application will
 various filters and options applied to them. The changes are dynamic and you do not need to 
 restard the applications for them to be effective.
 
-It should be noted that the Core application can work on a device running Android 2.3 and above whereas the Config application can only run from Android 3.0 on on due to the use of the specific APIs. In order to test applications on older SDKs without the GUI by only using the Core application, you can simply create a file named "introspy.config" containing filters you want to hook at the root of the directory of the applications you want to test. Example:
+It should be noted that the Core application can work on a device running Android 2.3 and above whereas the Config application can only run from Android 3.0 on due to the use of specific APIs. In order to test applications on older SDKs without the GUI by only using the Core application, you can simply create a file named "introspy.config" containing filters you want to hook in the directory of the applications you want to test. Example:
 
         adb shell su -c echo "GENERAL CRYPTO, KEY, HASH, FS, IPC, PREF, URI, WEBVIEW" > /data/data/com.YOUR_APP_NAME/introspy.config
 
