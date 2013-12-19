@@ -60,7 +60,7 @@ It should be noted that the Core application can work on a device running Androi
         adb uninstall com.introspy.config
 
 ### What if the extension crashes
-This tool has not been tested on all versions of Android. If the tool does not work on your version, please send us your error logs by doing:
+This tool has not been tested on all versions of Android. If the tool does not work on your version, please send us your error logs:
 
         adb logcat -s "InstrospyError"
 
