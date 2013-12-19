@@ -98,7 +98,7 @@ stack (comprizing of 3 calls) for the selected filters.
 ###### General Crypto:
 * Log encrypted/decrypted data before/after calls and the algo used
 (Note: "readable data is displayed if at least 75% of characters are "readable", unreadable characters are stored as ".". If data is not readable, it is stored as base 64)
-Spot static IVs and broken algorythms (ECB mode)
+* Spot static IVs and broken algorythms (ECB mode)
 
 ###### Hash:
 * Log data that is being hashed and the resulting hash
