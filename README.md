@@ -150,7 +150,7 @@ clone the source repository and build the packages yourself.
     git clone https://github.com/iSECPartners/introspy-android.git
 
 ### Adding hooks
-See http://isecpartners.github.io/Introspy-Android/ for instructions.
+Adding hooks is simple and can be done within the com.introspy.custom_hooks module. See the prefilled example in the code and http://isecpartners.github.io/Introspy-Android/ for more instructions.
 
 License
 -------
