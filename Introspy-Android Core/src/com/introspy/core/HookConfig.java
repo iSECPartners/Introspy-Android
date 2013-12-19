@@ -46,4 +46,39 @@ public class HookConfig {
 		_subType = subType;
 		_notes = notes;
 	}
+	
+	// constructor for custom hooks
+	public HookConfig(boolean active,
+			String className, 
+			String methodName,
+			Class<?>[] parameters,
+			IntroHook IntroHook,
+			String notes) {
+		
+		_IntroHook = IntroHook;
+		_className = className;
+		_active = active;
+		_methodName = methodName;
+		_parameters = parameters;
+		_type = "CUSTOM HOOK";
+		_subType = "CUSTOM HOOK";
+		_notes = notes;
+	}
+	
+	// constructor for custom hooks without notes
+	public HookConfig(boolean active,
+			String className, 
+			String methodName,
+			Class<?>[] parameters,
+			IntroHook IntroHook) {
+		
+		_IntroHook = IntroHook;
+		_className = className;
+		_active = active;
+		_methodName = methodName;
+		_parameters = parameters;
+		_type = "CUSTOM HOOK";
+		_subType = "CUSTOM HOOK";
+		_notes = "";
+	}
 }

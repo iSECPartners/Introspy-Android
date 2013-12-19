@@ -23,3 +23,11 @@ class Intro_DUMP extends IntroHook {
 		Log.i(_TAG, "------------------");
 	}
 }
+
+class Intro_SHOULD_NOT_BE_USED extends Intro_DUMP { 	
+	public void execute(Object... args) {
+		_logBasicInfo();
+		_logFlush_W("This method should not be used." + 
+				(!_notes.isEmpty() ? (" Note: " + _notes) : ""));
+	}
+}

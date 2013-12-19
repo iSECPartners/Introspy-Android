@@ -15,6 +15,7 @@ class IntroHook extends LoggerWrap {
 	
 	protected String _className, _methodName, _type;
 	protected String _packageName, _dataDir;
+	protected String _notes;
 	protected Object _resources;
 	protected Object _args;
 	
@@ -35,6 +36,7 @@ class IntroHook extends LoggerWrap {
 			_parameters = _config.getParameters();
 			_type = _config.getCategory();
 			_old = old;
+			_notes = _config.getNotes();
 			
 			_resources = resources;
 			
@@ -49,7 +51,7 @@ class IntroHook extends LoggerWrap {
 		// display info on the app related to the hook
 		_logBasicInfo();
 		if (!_config.getNotes().isEmpty())
-			_logLine("Notes: " + _config.getNotes());
+			_logLine("Notes: " + _notes);
 		_logLine("-> Resources type: " + 
 				(_resources !=  null ? _resources.getClass() : "None"));
 		

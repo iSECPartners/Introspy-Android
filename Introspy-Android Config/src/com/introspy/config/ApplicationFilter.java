@@ -86,11 +86,11 @@ public class ApplicationFilter extends UpdateAppList {
 		        	}
 	            }
 	            // create preferences with the appDir as key
-	            // Note: uninstalled apps are never cleaned
+	            // TODO: uninstalled apps are never cleaned
 	            // it does not create a bug because installed apps
-	            // are compared against preferences but it keeps
-	            // an history of all apps ever installed
-	            // no time to change this behavior
+	            // are compared against what is in the preferences 
+	            // but it keeps an history of all apps ever installed
+	            // ..no time to change this behavior
 	            else {
 	            	final ListView list = getListView();
 	            	for (int i = 0; i < _appList.size(); i++) {

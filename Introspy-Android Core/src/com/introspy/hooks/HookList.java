@@ -52,8 +52,11 @@ public class HookList {
 			new HookConfig(false, "CRYPTO", "GENERAL CRYPTO", "javax.crypto.Cipher", "update", 
 				new Intro_CRYPTO(), new Class<?>[]{byte[].class},
 				"Continues a multi-part transformation (encryption or decryption)"),
+			
+			new HookConfig(false, "CRYPTO", "GENERAL CRYPTO", "java.util.Random", "Random", 
+				new Intro_SHOULD_NOT_BE_USED(), new Class<?>[]{}, "Weak RNG"),
 				
-			// can't hook that if you hook doFinal as the hook calls it already
+			// doesn't need to hook that if you hook doFinal as the hook calls it already
 			new HookConfig(false, "CRYPTO", "GENERAL CRYPTO", "javax.crypto.Cipher", "getIV", 
 				new Intro_CRYPTO(), new Class<?>[]{}, ""),
 			

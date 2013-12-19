@@ -24,6 +24,7 @@ public class HookTypes extends UpdateAppList {
 			"URI", 
 			"SSL",
 			"WEBVIEW",
+			"CUSTOM HOOKS",
 			"SQLite\n|+NO DB",
 			"| STACK TRACES",
 			"| NO DB"

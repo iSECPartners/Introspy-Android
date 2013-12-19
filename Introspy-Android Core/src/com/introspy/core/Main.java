@@ -5,6 +5,7 @@ import java.lang.reflect.Member;
 import android.util.Log;
 
 import com.introspy.hooks.HookList;
+import com.introspy.custom_hooks.CustomHookList;
 import com.introspy.logging.LoggerConfig;
 import com.saurik.substrate.*;
 
@@ -16,8 +17,20 @@ public class Main {
 	
 	public static void initialize() {
 		HookConfig[] _config = HookList.getHookList();
+		HookConfig[] _custom_config = CustomHookList.getHookList();
 		
-		for (final HookConfig elemConfig : _config) {
+		initializeConfig(_config);
+		initializeConfig(_custom_config);
+		
+		MS.hookClassLoad("android.app.ContextImpl", new MS.ClassLoadHook() {
+			public void classLoaded(Class<?> resources) { 
+				ApplicationState.initApplicationState(resources);
+			}
+		});
+	}
+	
+	protected static void initializeConfig(HookConfig[] config) {
+		for (final HookConfig elemConfig : config) {
 			if (!elemConfig.isActive())
 				continue;
 			
@@ -27,13 +40,7 @@ public class Main {
 						_hookMethod(resources, elemConfig);
 					}
 				});
-		}
-		
-		MS.hookClassLoad("android.app.ContextImpl", new MS.ClassLoadHook() {
-			public void classLoaded(Class<?> resources) { 
-				ApplicationState.initApplicationState(resources);
-			}
-		});
+		}		
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
