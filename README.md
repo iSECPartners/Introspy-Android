@@ -41,6 +41,9 @@ Usage
 The Instrospy-Android Config application displays apps the Core application will hook and the
 various filters and options applied to them. This application need root access (you can use supersu to give temporary root access to the application). The changes are dynamic and you do not need to restard the applications for them to be effective.
 
+* Once configured with the Config application, logs are dumped in the system logs and in a database in the directory of the application hooked (in databases/introspy.db)
+* To generate an html report using the generated database, you can use the Introspy-Analyzer (https://github.com/iSECPartners/Introspy-Analyzer)
+
 It should be noted that the Core application can work on a device running Android 2.3 and above whereas the Config application can only run from Android 3.0 on due to the use of specific APIs. In order to test applications on older SDKs without the GUI by only using the Core application, you can simply create a file named "introspy.config" containing filters you want to hook in the directory of the applications you want to test. Example:
 
         adb shell su -c echo "GENERAL CRYPTO, KEY, HASH, FS, IPC, PREF, URI, WEBVIEW" > /data/data/com.YOUR_APP_NAME/introspy.config
