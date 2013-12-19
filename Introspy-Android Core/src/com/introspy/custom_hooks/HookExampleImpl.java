@@ -8,7 +8,8 @@ public class HookExampleImpl extends IntroHook {
 	@Override
 	public void execute(Object... args) {
 		_logBasicInfo();
-		_logParameter("string to copy", (Intent)args[0]);
+		_logParameter("Intent details", (Intent)args[0]);
 		_logFlush_I("Example of a CUSTOM HOOK. Notes: " + _notes);
 	}
 }
+
