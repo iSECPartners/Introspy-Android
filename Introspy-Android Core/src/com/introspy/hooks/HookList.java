@@ -130,7 +130,7 @@ public class HookList {
 			new HookConfig(false, "CRYPTO", "HASH", "java.security.MessageDigest", "digest", 
 					new Intro_HASH(), new Class<?>[]{byte[].class, Integer.TYPE, Integer.TYPE},
 					"Performs the final update and then computes and returns the final hash value"),
-			new HookConfig(false, "CRYPTO", "GENERAL CRYPTO", "java.security.MessageDigest", "digest", 
+			new HookConfig(false, "CRYPTO", "HASH", "java.security.MessageDigest", "digest", 
 					new Intro_HASH(), new Class<?>[]{byte[].class},
 					"Performs the final update and then computes and returns the final hash value"),
 			new HookConfig(true, "CRYPTO", "HASH", "java.security.MessageDigest", "update", 

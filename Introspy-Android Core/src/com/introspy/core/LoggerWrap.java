@@ -48,6 +48,14 @@ public class LoggerWrap extends IntroStringHelper {
 		_l.logBasicInfo();
 	}
 	
+	protected String _getFullTraces() {
+		return _l.getFullTraces();
+	}
+
+	protected String _getLightTraces() {
+		return _l.getLightTraces();		
+	}
+	
 	public void disableDBlogger() {
 		_l.disableDBlogger();
 	}
@@ -63,4 +71,5 @@ public class LoggerWrap extends IntroStringHelper {
 	public void disableTraces() {
 		_l.disableTraces();
 	}
+	
 }

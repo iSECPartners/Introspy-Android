@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class LoggerTraces extends LoggerConfig {
 	
-	private String _getFullTraces() {
+	public String getFullTraces() {
 		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
 	    if (ste == null)
 	        return "";
@@ -14,26 +14,7 @@ public class LoggerTraces extends LoggerConfig {
 	    return stringBuilder.toString();
 	}
 	
-	public void enableTraces() {
-		_stackTraces  = true;
-	}
-	public void disableTraces() {
-		_stackTraces  = false;
-	}
-	
-	protected void _addTraces() {
-		_traces = "";
-		if (_stackTraces) {
-			if (_fullTraces)
-				_traces = _getFullTraces();
-			else
-				_traces = _getTraces();
-			
-			_out = _traces + _out;
-		}
-	}
-	
-	protected String _getTraces() {
+	public String getLightTraces() {
 	    String out = "";
 		try {
 			StackTraceElement[] ste = 
@@ -49,5 +30,24 @@ public class LoggerTraces extends LoggerConfig {
 			Log.w(_TAG_ERROR, out);
 		}
 		return out;
+	}
+	
+	public void enableTraces() {
+		_stackTraces  = true;
+	}
+	public void disableTraces() {
+		_stackTraces  = false;
+	}
+	
+	protected void _addTraces() {
+		_traces = "";
+		if (_stackTraces) {
+			if (_fullTraces)
+				_traces = getFullTraces();
+			else
+				_traces = getLightTraces();
+			
+			_out = _traces + _out;
+		}
 	}
 }
