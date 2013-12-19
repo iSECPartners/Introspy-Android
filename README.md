@@ -29,7 +29,7 @@ Usage
 
 
 * Ensure that Cydia Substrate has been deployed on your test device. The installer requires a rooted device and can be found on the Google Play store at https://play.google.com/store/apps/details?id=com.saurik.substrate&hl=en 
-* Download the pre-compiled APK available at https://github.com/iSECPartners/Android-SSL-TrustKiller/releases
+* Download the pre-compiled APK available at https://github.com/iSECPartners/Introspy-Android
 * Install Introspy-Android Core.apk on a device where Cydia Substrate is installed with:
 
         adb install Introspy-Android Core.apk
