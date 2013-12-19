@@ -50,37 +50,45 @@
 <h3>
 <a name="traceranalyzer" class="anchor" href="#traceranalyzer"><span class="octicon octicon-link"></span></a>Tracer/Analyzer</h3>
 
-<p>Once installed, the tool will store in a SQLite database calls made by Android applications to security-sensitive APIs as well as potential issues.</p>
+<p>Once installed, the tool will store in a SQLite database (and in the system logs) calls made by Android applications to security-sensitive APIs as well as potential issues.</p>
 
 <p>Example of data dumped in logcat:</p>
 
-<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/example_logcat.png?token=999998__eyJzY29wZSI6IlJhd0Jsb2I6aVNFQ1BhcnRuZXJzL0ludHJvc3B5LUFuZHJvaWQvbWFzdGVyL2ltYWdlcy9leGFtcGxlX2xvZ2NhdC5wbmciLCJleHBpcmVzIjoxMzg3NTg5OTg2fQ%3D%3D--8362565445d4d21b08ad553717b35d200a5b76eb" alt="android logcat"></p>
+<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/example_logcat.png" alt="android logcat">
+cydia_installed</p>
 
 <p>Example of an HTML report (leveraging the Analyzer):</p>
 
-<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/html_report_android.PNG?token=999998__eyJzY29wZSI6IlJhd0Jsb2I6aVNFQ1BhcnRuZXJzL0ludHJvc3B5LUFuZHJvaWQvbWFzdGVyL2ltYWdlcy9odG1sX3JlcG9ydF9hbmRyb2lkLlBORyIsImV4cGlyZXMiOjEzODc1OTAwODJ9--b29ae685bf801ef73668bf5e902d0adb74f2821f" alt="HTML report"></p>
+<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/html_report_android.PNG" alt="HTML report"></p>
 
-<p>The GUI lets the user choose which Android App should be monitored and which APIs to monitor. The "NO DB" option disables logging into a database (which makes the tool faster) and the "STACK TRACE" option will save and log a minimal call stack for the selected filters.</p>
+<p>The GUI lets the user choose which Android App should be monitored and which APIs to monitor. The "NO DB" option disables logging into a database (which makes the apps faster) and the "STACK TRACE" option will save and log a minimal call stack for the selected filters.</p>
 
-<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/GUI.png?token=999998__eyJzY29wZSI6IlJhd0Jsb2I6aVNFQ1BhcnRuZXJzL0ludHJvc3B5LUFuZHJvaWQvbWFzdGVyL2ltYWdlcy9HVUkucG5nIiwiZXhwaXJlcyI6MTM4NzU4ODQyOH0%3D--0b8e4fbc643deed947faa8ae4d30e3b91750d97f" alt="Android GUI"></p>
+<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/GUI.png" alt="Android GUI"></p>
 
 <h3>
 <a name="easy-way-to-add-hooks" class="anchor" href="#easy-way-to-add-hooks"><span class="octicon octicon-link"></span></a>Easy way to add hooks</h3>
 
-<p>The tool was designed to make it easy for anyone to add hooks. To do so, you need to create a HookConfig object in HookList.java (com.introspy.hooks) as well as a call handler class in the same package. This class should extend IntroHook and implement an execute() method:</p>
+<p>The tool was designed to make it easy for anyone to add hooks. To do so, you need to create a HookConfig object in CustomHookList.java (com.introspy.custom_hooks) as well as a call handler class in the same package. This class should extend IntroHook and implement an execute() method:</p>
 
 <p>Example:</p>
 
-<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/new_object.PNG?token=999998__eyJzY29wZSI6IlJhd0Jsb2I6aVNFQ1BhcnRuZXJzL0ludHJvc3B5LUFuZHJvaWQvbWFzdGVyL2ltYWdlcy9uZXdfb2JqZWN0LlBORyIsImV4cGlyZXMiOjEzODc1ODg3NTF9--237c241433a8ad30bd11523b234bb87937adcb9e" alt="Hook Config"></p>
+<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/adding_hooks.PNG" alt="Hook Config"></p>
 
-<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/impl_handle.PNG?token=999998__eyJzY29wZSI6IlJhd0Jsb2I6aVNFQ1BhcnRuZXJzL0ludHJvc3B5LUFuZHJvaWQvbWFzdGVyL2ltYWdlcy9pbXBsX2hhbmRsZS5QTkciLCJleHBpcmVzIjoxMzg3NTg4NzY3fQ%3D%3D--12b75f1f9a0009baa24b9c10fde8c77bbcd18a20" alt="Impl Handle"></p>
+<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/adding_hook_impl.PNG" alt="Impl Handle"></p>
+
+<p>Another example of an implementation for a PBKDF function:</p>
+
+<p><img src="https://raw.github.com/iSECPartners/Introspy-Android/master/images/impl_handle.PNG" alt="Impl Handle"></p>
 
 <h3>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting started</h3>
 
 <p>Instructions are available in the project's README on <a href="https://github.com/iSECPartners/Introspy-Android">Introspy's Github repo</a>.</p>
 
-<hr><p>Marc Blanchou - <a href="https://github.com/mblanchou" class="user-mention">@mblanchou</a></p>
+<h3>
+<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h3>
+
+<p>Marc Blanchou - <a href="https://github.com/mblanchou" class="user-mention">@mblanchou</a></p>
       </section>
     </div>
 
