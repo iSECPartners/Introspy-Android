@@ -118,13 +118,13 @@ stack (comprizing of 3 calls) for the selected filters.
 * Log some Intent sent with details (and extra)
 
 ###### Pref:
-* Log read/write of preferences with its data, the type and the default value (value set if nothing is return)
+* Log read/write of preferences with its data, the type and the default value (value set if nothing is returned)
 * Dump all preferences when getAll is called, this is done only once to avoid noise
 * Warn for access of preferences that don't exist (could be a hidden preferences to enable logs for instance)
 
 ###### SSL:
 * Warn if SSL is used but any hostname is validated for a valid cert
-* Warn if the app validates any cert
+* Warn if the app validates any cert (self-signed etc.)
 * Log if cert pinning is potentially implemented
 * Log if SSL not used
 
