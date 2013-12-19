@@ -120,7 +120,7 @@ stack (comprizing of 3 calls) for the selected filters.
 ###### Pref:
 * Log read/write of preferences with its data, the type and the default value (value set if nothing is return)
 * Dump all preferences when getAll is called, this is done only once to avoid noise
-* Warn for access of preferences that don't exist (could be a hidden pref like 'enable logs'
+* Warn for access of preferences that don't exist (could be a hidden preferences to enable logs for instance)
 
 ###### SSL:
 * Warn if SSL is used but any hostname is validated for a valid cert
