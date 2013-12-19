@@ -110,7 +110,7 @@ stack (comprizing of 3 calls) for the selected filters.
 * Log passcode used with a keystore
 
 ###### FS:
-* Log only some file system access as very noisy
+* Log only some file system accesses as they are very noisy
 * Spot read/write on SD card and the creation of file (or set property) as world readable/writable
 
 ###### IPC:
