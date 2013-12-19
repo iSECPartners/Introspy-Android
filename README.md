@@ -99,6 +99,7 @@ stack (comprizing of 3 calls) for the selected filters.
 * Log encrypted/decrypted data before/after calls and the algo used
 (Note: "readable data is displayed if at least 75% of characters are readable, unreadable characters are stored as ".". If data is not readable, it is stored as base 64)
 * Spot static IVs and broken algorythms (ECB mode)
+* Spot weak RNG
 
 ###### Hash:
 * Log data that is being hashed and the resulting hash
@@ -116,10 +117,12 @@ stack (comprizing of 3 calls) for the selected filters.
 ###### IPC:
 * Log IPC creations with details
 * Log some Intent sent with details (and extra)
+* Programmatic permissions and creation
 
 ###### Pref:
 * Log read/write of preferences with its data, the type and the default value (value set if nothing is returned)
 * Dump all preferences when getAll is called, this is done only once to avoid noise
+* Log world read/writeable prefs
 * Warn for access of preferences that don't exist (could be a hidden preferences to enable logs for instance)
 
 ###### SSL:
