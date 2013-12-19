@@ -94,6 +94,47 @@ github repository soon) to generate an HTML formatted report.
 Checking the "STACK TRACES" option within the Config tool will dump a relevant call 
 stack (comprizing of 3 calls) for the selected filters.
 
+### What is being analyzed/logged, exactly?
+###### General Crypto:
+* Log encrypted/decrypted data before/after calls and the algo used
+(Note: "readable data is displayed if at least 75% of characters are "readable", unreadable characters are stored as ".". If data is not readable, it is stored as base 64)
+Spot static IVs and broken algorythms (ECB mode)
+
+###### Hash:
+* Log data that is being hashed and the resulting hash
+* Display algo used and warns if weak (MD5)
+
+###### Key:
+* Log any keys used to encrypt
+* Log PBKDF key creation
+* Log passcode used with a keystore
+
+###### FS:
+* Log only some file system access as very noisy
+* Spot read/write on SD card and the creation of file (or set property) as world readable/writable
+
+###### IPC:
+* Log IPC creations with details
+* Log some Intent sent with details (and extra)
+
+###### Pref:
+* Log read/write of preferences with its data, the type and the default value (value set if nothing is return)
+* Dump all preferences when getAll is called, this is done only once to avoid noise
+* Warn for access of preferences that don't exist (could be a hidden pref like 'enable logs'
+
+###### SSL:
+* Warn if SSL is used but any hostname is validated for a valid cert
+* Warn if the app validates any cert
+* Log if cert pinning is potentially implemented
+* Log if SSL not used
+
+###### Webview:
+* Log when JS, plugins or FS access are enabled for a webview
+* Warn/log when a JS interface is used (JS bridge)
+
+###### SQLite:
+* Log data passed to execSQL, update*, insert*, replace
+
 Doing It Yourself
 -----------------
 
