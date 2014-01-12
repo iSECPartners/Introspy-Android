@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class ApplicationFilter extends UpdateAppList {
 
@@ -61,10 +60,9 @@ public class ApplicationFilter extends UpdateAppList {
 			Log.w("IntrospyConfig", "Error:onListItemClick:" + e + 
 					"\n SP: "+ _sp);
 		}
-		if (!InjectConfig.getInstance().writeConfig(_lastItemChecked, 
-				_lastItemSelected, _context))
-			Toast.makeText(getActivity(), "This app. needs root!", 
-					Toast.LENGTH_LONG).show();
+		InjectConfig.getInstance().writeConfig(_lastItemChecked, 
+				_lastItemSelected, _context);
+		InjectConfig.getInstance().commit();
 	}
 	
     @Override
@@ -100,12 +98,12 @@ public class ApplicationFilter extends UpdateAppList {
 	            		// overwrite / remove the config file even if preferences
 	            		// state otherwise because the tester may remove/add it
 	            		if (_alwaysOverwriteConfig) {
-	            			if (!InjectConfig.getInstance().writeConfig(
-	            					checked, appDir, _context))
-	            				Toast.makeText(getActivity(), "This app. needs root!", 
-	            								Toast.LENGTH_LONG).show();
+	            			InjectConfig.getInstance().writeConfig(
+	            					checked, appDir, _context);
 	            		}
 	            	}
+	            	if (_alwaysOverwriteConfig)
+	            		InjectConfig.getInstance().commit();
 	            }
             }
             catch (Exception e) {

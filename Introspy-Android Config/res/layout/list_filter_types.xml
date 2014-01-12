@@ -2,7 +2,7 @@
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:layout_width="fill_parent"
-    android:layout_height= "42dip"
+    android:layout_height= "38dip"
     android:textAppearance="?android:attr/textAppearanceLarge"
     android:gravity="center_vertical"
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"

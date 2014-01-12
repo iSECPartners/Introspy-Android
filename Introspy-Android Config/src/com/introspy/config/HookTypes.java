@@ -25,9 +25,9 @@ public class HookTypes extends UpdateAppList {
 			"SSL",
 			"WEBVIEW",
 			"CUSTOM HOOKS",
-			"SQLite\n|+NO DB",
-			"| STACK TRACES",
-			"| NO DB"
+			"SQLite (NO DB)",
+			"_ STACK TRACES",
+			"_ NO DB"
 	};
 
 	public static String[] getHookTypes() {
@@ -83,6 +83,7 @@ public class HookTypes extends UpdateAppList {
 				InjectConfig.getInstance().enableApp(appDir, _context);
 			}
 		}
+		InjectConfig.getInstance().commit();
 		
 	}
 	

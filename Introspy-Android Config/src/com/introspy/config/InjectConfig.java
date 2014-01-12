@@ -32,45 +32,41 @@ public class InjectConfig {
     	}
     	
     	ret = ret.substring(0, ret.length() - 1);
-    	ret += "\n";
+//    	ret += "\n";
 		return ret;
 	}
 	
-	public Boolean enableApp(String appDir, Context context) {
+	public void enableApp(String appDir, Context context) {
 		String path = appDir + "/introspy.config";
-		try {
-			Runtime.getRuntime().exec("su -c echo '" + 
-					getHookTypesFromPrefs(context) + "' > " + path + 
-					" ; chmod 664 " + path);
-		} catch (Exception e) {
-			Log.w(_TAG, "error: this app needs to be root.");
-			return false;
-		}
-		return true;
+		_command += "su -c echo '" + getHookTypesFromPrefs(context) + "' > " + path + " ; su -c chmod 664 " + path + " ; ";
 	}
 	
-	public Boolean disableApp(String appDir) {
+	public void disableApp(String appDir) {
 		String path = appDir + "/introspy.config";
+		_command += "su -c rm " + path + " ; ";
+	}
+	
+	private String _command = "";
+	
+	public Boolean commit() {
+		if (_command.isEmpty())
+			return false;
+		Log.i(_TAG, _command);
 		try {
-			Runtime.getRuntime().exec("su -c rm " + path);
+			Runtime.getRuntime().exec(_command);
 		} catch (Exception e) {
+			_command = "";
 			Log.w(_TAG, "error: this app needs to be root.");
 			return false;
 		}
+		_command = "";
 		return true;
 	}
 	
-	public Boolean execute(String command) {
-		try {
-			Runtime.getRuntime().exec("su -c '" + command + "'");
-		} catch (Exception e) {
-			Log.w(_TAG, "error: this app needs to be root.");
-			return false;
-		}
-		return true;
-	}
-	
-	public Boolean writeConfig(Boolean write, String appDir, Context context) { 
-		return (write ? enableApp(appDir, context) : disableApp(appDir));
+	public void writeConfig(Boolean enable, String appDir, Context context) { 
+		if (enable)
+			enableApp(appDir, context);
+		else
+			disableApp(appDir);
 	}
 }
