@@ -28,11 +28,11 @@ class Intro_SSL_CHECK_TRUST_MANAGER extends IntroHook {
 				// the app may verify certs
 				check = true;
 			}
-			if (check)
+			if (!check)
 				_logFlush_W("The app does not verify SSL certs");
 			else
 				_logFlush_I("Use of a custom Trust Manager, " +
-						"the app may do cert. pinning OR validate any cert");
+						"the app may do cert. pinning (OR potentially validate any cert)");
 		}
 	}
 }
