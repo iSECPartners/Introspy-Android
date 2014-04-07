@@ -38,7 +38,7 @@ public class InjectConfig {
 	
 	public void enableApp(String appDir, Context context) {
 		String path = appDir + "/introspy.config";
-		_command += "su -c echo '" + getHookTypesFromPrefs(context) + "' > " + path + " ; su -c chmod 664 " + path + " ; ";
+		_command += "su -c 'echo " + getHookTypesFromPrefs(context) + "> " + path + "'; su -c 'chmod 664 " + path + "'; ";
 	}
 	
 	public void disableApp(String appDir) {
