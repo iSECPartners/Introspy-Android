@@ -1,5 +1,10 @@
 package com.introspy.config;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -38,12 +43,13 @@ public class InjectConfig {
 	
 	public void enableApp(String appDir, Context context) {
 		String path = appDir + "/introspy.config";
-		_command += "su -c echo '" + getHookTypesFromPrefs(context) + "' > " + path + " ; su -c chmod 664 " + path + " ; ";
+		_command += "echo '" + getHookTypesFromPrefs(context) + "' > " + path + " \n";
+		_command += "chmod 664 " + path + " \n";
 	}
 	
 	public void disableApp(String appDir) {
 		String path = appDir + "/introspy.config";
-		_command += "su -c rm " + path + " ; ";
+		_command += "rm " + path + " \n";
 	}
 	
 	private String _command = "";
@@ -53,7 +59,7 @@ public class InjectConfig {
 			return false;
 		Log.i(_TAG, _command);
 		try {
-			Runtime.getRuntime().exec(_command);
+			execSuCommand(_command);
 		} catch (Exception e) {
 			_command = "";
 			Log.w(_TAG, "error: this app needs to be root.");
@@ -69,4 +75,29 @@ public class InjectConfig {
 		else
 			disableApp(appDir);
 	}
+	
+	public static String execSuCommand(String cmd) throws IOException
+	{
+		Log.e("execSuCommand", cmd);
+		Process process = Runtime.getRuntime().exec("su");  
+		  
+        DataOutputStream os = new DataOutputStream(process.getOutputStream());  
+        os.writeBytes(cmd+"\n");
+        os.flush();
+        os.writeBytes("exit\n");
+        os.flush();
+        
+        BufferedReader reader = new BufferedReader(new InputStreamReader(  
+                process.getInputStream()));  
+        int read;  
+        char[] buffer = new char[4096];  
+        StringBuffer output = new StringBuffer();  
+        while ((read = reader.read(buffer)) > 0) {  
+            output.append(buffer, 0, read);  
+        }  
+        reader.close();
+        os.close();
+        return output.toString();
+	}
+
 }
